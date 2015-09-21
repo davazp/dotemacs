@@ -79,6 +79,15 @@ buffers."
 ;;;; Convenience
 ;;;; -----------------------------------------------------------------
 
+;;; Diff
+
+;; Do not open the diff control buffer in a different frame
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+
+;; Use a vertical setting by default
+(setq ediff-split-window-function 'split-window-horizontally)
+
+
 ;;; Zooming
 
 (unless (package-installed-p 'zoom-frm)
