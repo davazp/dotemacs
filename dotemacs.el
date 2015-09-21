@@ -188,6 +188,17 @@ buffers."
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 
 
+;;; Common Lisp
+
+(unless (package-installed-p 'slime)
+  (package-install 'slime))
+
+(setq inferior-lisp-program (locate-file "sbcl" exec-path))
+(slime-setup '(slime-fancy))
+
+
+
+
 
 ;;;; Javascript
 
