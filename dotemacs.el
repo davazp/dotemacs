@@ -140,6 +140,14 @@ buffers."
 ;;;; -----------------------------------------------------------------
 
 
+;;; Support SASS
+
+(unless (package-installed-p 'scss-mode)
+  (package-install 'scss-mode))
+
+(add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
+
+
 ;;; Support for Markdown, YAML and JSON.
 
 (unless (package-installed-p 'markdown-mode)
