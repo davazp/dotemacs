@@ -141,6 +141,13 @@ buffers."
 (define-key global-map (kbd "<f12>") 'magit-status)
 
 
+;;; Grep and others
+
+;; Use case-insensitive grep by default
+(require 'grep)
+(grep-apply-setting 'grep-find-command '("find . -type f -exec grep -nH -i -e  {} +" . 37))
+
+
 
 ;;;; -----------------------------------------------------------------
 ;;;; Programming Languages and Markup
@@ -172,6 +179,14 @@ buffers."
   (package-install 'json-mode)
   (setq json-mode))
 
+
+;;; Haskell
+
+(unless (package-installed-p 'haskell-mode)
+  (package-install 'haskell-mode))
+
+(add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 
 
 ;;;; Emacs Lisp
