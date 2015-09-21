@@ -114,8 +114,24 @@ buffers."
 
 
 
+;;;; -----------------------------------------------------------------
+;;;; Programming Languages
+;;;; -----------------------------------------------------------------
+
+
+;;;; Lisp
+;;;
+;;; Use paredit as a close to structural editor
+
+(unless (package-installed-p 'paredit)
+  (package-install 'paredit))
+
+(add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+(add-hook 'lisp-mode-hook 'enable-paredit-mode)
+(add-hook 'scheme-mode-hook 'enable-paredit-mode)
+
+
+
 (provide 'dotemacs)
 ;;; dotemacs.el ends here
-
-
 
