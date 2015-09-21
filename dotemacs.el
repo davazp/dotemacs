@@ -55,6 +55,9 @@
 ;; Do not generate backup files, we have git nowadays.
 (setq make-backup-files nil)
 
+;;; dabbrev expands preserving the orignial case
+(setq dabbrev-case-replace nil)
+
 
 
 ;; Use ido to find buffers and files. In addition of that, we define
