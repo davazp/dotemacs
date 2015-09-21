@@ -238,7 +238,11 @@ buffers."
 
 
 
-
 (provide 'dotemacs)
+
+;;; Local Variables:
+;;; mode: emacs-lisp
+;;; End:
+
 ;;; dotemacs.el ends here
 
