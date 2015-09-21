@@ -58,6 +58,8 @@
 ;;; dabbrev expands preserving the orignial case
 (setq dabbrev-case-replace nil)
 
+;;; Don't use tabs
+(setq-default indent-tabs-mode nil)
 
 
 ;; Use ido to find buffers and files. In addition of that, we define
