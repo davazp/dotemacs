@@ -75,6 +75,35 @@ buffers."
 
 
 
+;;; Dired
+
+(require 'dired-x)
+(require 'dired-aux)
+
+(setq dired-listing-switches "-lh")
+
+(setq dired-omit-files "^\\.?#\\|^\\.")
+(add-hook 'dired-mode-hook 'dired-omit-mode)
+
+(unless (package-installed-p 'wgrep)
+  (package-install 'wgrep))
+
+
+
+
+;;; MaGIT -- Git integration with GNU/Emacs
+
+(unless (package-installed-p 'magit)
+  (package-install 'magit))
+
+(setq magit-popup-show-common-commands nil)
+(setq magit-last-seen-setup-instructions "1.4.0")
+(define-key global-map (kbd "<f12>") 'magit-status)
+
+
 
 (provide 'dotemacs)
 ;;; dotemacs.el ends here
+
+
+
