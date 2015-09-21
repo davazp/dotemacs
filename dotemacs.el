@@ -144,6 +144,11 @@ buffers."
 ;;;; Programming Languages and Markup
 ;;;; -----------------------------------------------------------------
 
+;; Install paredit for a pleasent Lisp coding experience
+(unless (package-installed-p 'paredit)
+  (package-install 'paredit))
+
+
 
 ;;; Support SASS
 
@@ -167,21 +172,11 @@ buffers."
 
 
 
-;;;; Lisp
-;;;
-
-;;; Use paredit as a close to structural editor
-
-(unless (package-installed-p 'paredit)
-  (package-install 'paredit))
+;;;; Emacs Lisp
 
 (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
-(add-hook 'lisp-mode-hook 'enable-paredit-mode)
-(add-hook 'scheme-mode-hook 'enable-paredit-mode)
 
-
-;;; Nice slime-like navigation for Emacs lisp with M-. and M-,
-
+;; Nice slime-like navigation for Emacs lisp with M-. and M-,
 (unless (package-installed-p 'elisp-slime-nav)
   (package-install 'elisp-slime-nav))
 
@@ -189,19 +184,28 @@ buffers."
 (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
   (add-hook hook 'turn-on-elisp-slime-nav-mode))
 
-;;; Show parameter information in Emacs Lisp
+;; Show parameter information in the minibuffer
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 
+(unless (package-installed-p 'dash)
+  (package-install 'dash))
 
-;;; Common Lisp
+(eval-after-load "dash" '(dash-enable-font-lock))
+
+
+;;;; Scheme
+(add-hook 'scheme-mode-hook 'enable-paredit-mode)
+
+
+;;;; Common Lisp
+
+(add-hook 'lisp-mode-hook 'enable-paredit-mode)
 
 (unless (package-installed-p 'slime)
   (package-install 'slime))
 
 (setq inferior-lisp-program (locate-file "sbcl" exec-path))
 (slime-setup '(slime-fancy))
-
-
 
 
 
