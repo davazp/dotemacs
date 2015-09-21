@@ -85,6 +85,18 @@ buffers."
   (package-install 'zoom-frm))
 
 
+;;; Multiple Cursors and expand-region
+
+(unless (package-installed-p 'multiple-cursors)
+  (package-install 'multiple-cursors))
+
+(unless (package-installed-p 'expand-region)
+  (package-install 'expand-region))
+
+(define-key global-map (kbd "C-#") 'er/expand-region)
+(define-key global-map (kbd "C-$") 'mc/mark-next-like-this)
+
+
 ;;;; -----------------------------------------------------------------
 ;;;; Tools
 ;;;; -----------------------------------------------------------------
@@ -123,13 +135,23 @@ buffers."
 ;;;
 ;;; Use paredit as a close to structural editor
 
+
+;;; Nice slime-like navigation for Emacs lisp with M-. and M-,
+
+(unless (package-installed-p 'elisp-slime-nav)
+  (package-install 'elisp-slime-nav))
+
+(require 'elisp-slime-nav)
+(dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
+  (add-hook hook 'turn-on-elisp-slime-nav-mode))
+
+
 (unless (package-installed-p 'paredit)
   (package-install 'paredit))
 
 (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
 (add-hook 'lisp-mode-hook 'enable-paredit-mode)
 (add-hook 'scheme-mode-hook 'enable-paredit-mode)
-
 
 
 (provide 'dotemacs)
