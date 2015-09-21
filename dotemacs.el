@@ -136,8 +136,22 @@ buffers."
 
 
 ;;;; -----------------------------------------------------------------
-;;;; Programming Languages
+;;;; Programming Languages and Markup
 ;;;; -----------------------------------------------------------------
+
+
+;;; Support for Markdown, YAML and JSON.
+
+(unless (package-installed-p 'markdown-mode)
+  (package-install 'markdown-mode))
+
+(unless (package-installed-p 'yaml-mode)
+  (package-install 'yaml-mode))
+
+(unless (package-installed-p 'json-mode)
+  (package-install 'json-mode)
+  (setq json-mode))
+
 
 
 ;;;; Lisp
