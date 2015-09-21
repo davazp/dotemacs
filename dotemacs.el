@@ -41,8 +41,8 @@
 
 ;;;; General settings
 
-;;; General customizations to the UI. We want to maximize the space
-;;; available for the text.
+;; General customizations to the UI. We want to maximize the space
+;; available for the text.
 
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
@@ -50,14 +50,15 @@
 
 (display-time)
 
-;;; Do not generate backup files, we have git nowadays.
+;; Do not generate backup files, we have git nowadays.
 (setq make-backup-files nil)
 
 
-;;; Use ido to find buffers and files. In addition of that, we define
-;;; the `switch-to-other-buffer' function to explote the locality of
-;;; references: I work most of the time with one or two buffers at the
-;;; same time.
+
+;; Use ido to find buffers and files. In addition of that, we define
+;; the `switch-to-other-buffer' function to explote the locality of
+;; references: I work most of the time with one or two buffers at the
+;; same time.
 
 (ido-mode 1)
 (setq ido-use-filename-at-point 'guess)
