@@ -39,7 +39,9 @@
 (package-initialize)
 
 
+;;;; -----------------------------------------------------------------
 ;;;; General settings
+;;;; -----------------------------------------------------------------
 
 ;; General customizations to the UI. We want to maximize the space
 ;; available for the text.
