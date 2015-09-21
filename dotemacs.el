@@ -75,6 +75,20 @@ buffers."
 
 
 
+;;;; -----------------------------------------------------------------
+;;;; Convenience
+;;;; -----------------------------------------------------------------
+
+;;; Zooming
+
+(unless (package-installed-p 'zoom-frm)
+  (package-install 'zoom-frm))
+
+
+;;;; -----------------------------------------------------------------
+;;;; Tools
+;;;; -----------------------------------------------------------------
+
 ;;; Dired
 
 (require 'dired-x)
@@ -87,8 +101,6 @@ buffers."
 
 (unless (package-installed-p 'wgrep)
   (package-install 'wgrep))
-
-
 
 
 ;;; MaGIT -- Git integration with GNU/Emacs
