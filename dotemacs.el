@@ -185,6 +185,37 @@ buffers."
 (add-hook 'scheme-mode-hook 'enable-paredit-mode)
 
 
+
+;;;; Javascript
+
+(unless (package-installed-p 'js2-mode)
+  (package-install 'js2-mode))
+
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(setq-default js2-basic-offset 2)
+(setq-default js-indent-level 2)
+
+
+;;; Add support in ffap for finding files loaded from node_modules.
+(require 'ffap)
+(defun ffap-nodejs-module (name)
+  (unless (or (string-prefix-p "/" name)
+              (string-prefix-p "./" name)
+              (string-prefix-p "../" name))
+    (let ((base (locate-dominating-file
+                 default-directory
+                 (lambda (dir)
+                   (let ((filename (concat dir "node_modules/" name)))
+                     (and (file-exists-p filename)
+                          filename))))))
+      (and base (concat base "node_modules/" name)))))
+
+(add-to-list 'ffap-alist '(js-mode . ffap-nodejs-module) t)
+(add-to-list 'ffap-alist '(js2-mode . ffap-nodejs-module) t)
+
+
+
+
 (provide 'dotemacs)
 ;;; dotemacs.el ends here
 
