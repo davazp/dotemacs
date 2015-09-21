@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2015  David Vazquez
 
-;; Author: David Vazquez <davazp@debian>
+;; Author: David Vazquez <davazp@gmail.com>
 ;; Keywords:
 
 ;; This program is free software; you can redistribute it and/or modify
