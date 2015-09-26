@@ -157,6 +157,9 @@ buffers."
 (unless (package-installed-p 'paredit)
   (package-install 'paredit))
 
+(unless (package-installed-p 'paren-face)
+  (package-install 'paren-face)
+  (global-paren-face-mode 1))
 
 
 ;;; Support SASS
