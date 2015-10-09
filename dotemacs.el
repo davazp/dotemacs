@@ -120,7 +120,7 @@ buffers."
 (unless (package-installed-p 's)
   (package-install 's))
 
-
+(require 's)
 
 
 ;;;; -----------------------------------------------------------------
@@ -167,6 +167,7 @@ buffers."
   (setq yas-snippet-dirs (list (concat base "snippets/"))))
 
 (yas-global-mode)
+
 
 
 
