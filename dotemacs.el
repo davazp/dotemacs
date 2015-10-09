@@ -285,6 +285,15 @@ buffers."
 
 
 
+;;;; -----------------------------------------------------------------
+;;;;  Load machine-specific configuration if available
+;;;; -----------------------------------------------------------------
+
+(let ((machine-elisp-file (expand-file-name (concat system-name ".el"))))
+  (when (file-exists-p machine-elisp-file)
+    (load machine-elisp-file)))
+
+
 (provide 'dotemacs)
 
 ;;; Local Variables:
