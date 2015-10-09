@@ -55,8 +55,11 @@
 ;; Do not generate backup files, we have git nowadays.
 (setq make-backup-files nil)
 
-;;; dabbrev expands preserving the orignial case
+;; dabbrev expands preserving the orignial case
 (setq dabbrev-case-replace nil)
+;; but use hippie-expand instead of raw dabbrev-expand!
+(define-key global-map (kbd "M-/") 'hippie-expand)
+
 
 ;;; Don't use tabs
 (setq-default indent-tabs-mode nil)
