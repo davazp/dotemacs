@@ -60,7 +60,8 @@
 
 ;;; Don't use tabs
 (setq-default indent-tabs-mode nil)
-
+;; but if some mode use them, then set it to 4 spaces
+(setq-default tab-width 4)
 
 ;; Use ido to find buffers and files. In addition of that, we define
 ;; the `switch-to-other-buffer' function to explote the locality of
