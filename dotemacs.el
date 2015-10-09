@@ -114,6 +114,15 @@ buffers."
 (define-key global-map (kbd "C-$") 'mc/mark-next-like-this)
 
 
+
+;;; String utilities
+
+(unless (package-installed-p 's)
+  (package-install 's))
+
+
+
+
 ;;;; -----------------------------------------------------------------
 ;;;; Tools
 ;;;; -----------------------------------------------------------------
@@ -147,6 +156,18 @@ buffers."
 ;; Use case-insensitive grep by default
 (require 'grep)
 (grep-apply-setting 'grep-find-command '("find . -type f -exec grep -nH -i -e  {} +" . 37))
+
+
+;;; Yasnippet
+
+(unless (package-installed-p 'yasnippet)
+  (package-install 'yasnippet))
+
+(let ((base (file-name-directory (or load-file-name (buffer-file-name)))))
+  (setq yas-snippet-dirs (list (concat base "snippets/"))))
+
+(yas-global-mode)
+
 
 
 
@@ -259,6 +280,7 @@ buffers."
 
 (add-to-list 'ffap-alist '(js-mode . ffap-nodejs-module) t)
 (add-to-list 'ffap-alist '(js2-mode . ffap-nodejs-module) t)
+
 
 
 
