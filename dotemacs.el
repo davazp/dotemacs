@@ -267,6 +267,8 @@ buffers."
 (setq-default js2-basic-offset 2)
 (setq-default js-indent-level 2)
 
+(setq js2-include-browser-externs t
+      js2-include-node-externs t)
 
 ;;; Add support in ffap for finding files loaded from node_modules.
 (require 'ffap)
@@ -284,6 +286,16 @@ buffers."
 
 (add-to-list 'ffap-alist '(js-mode . ffap-nodejs-module) t)
 (add-to-list 'ffap-alist '(js2-mode . ffap-nodejs-module) t)
+
+
+(unless (package-installed-p 'nodejs-repl)
+  (package-install 'nodejs-repl))
+
+(defun js-send-to-nodejs-repl ()
+  (interactive)
+  (let ((string (buffer-string)))
+    (nodejs-repl)
+    (nodejs-repl--send-string string)))
 
 
 
