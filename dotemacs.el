@@ -130,6 +130,7 @@ buffers."
 ;;;; Tools
 ;;;; -----------------------------------------------------------------
 
+
 ;;; Dired
 
 (require 'dired-x)
@@ -172,6 +173,15 @@ buffers."
 (yas-global-mode)
 
 (setq yas-prompt-functions '(yas-ido-prompt))
+
+
+;;; Projectile
+
+(unless (package-installed-p 'projectile)
+  (package-install 'projectile))
+
+(projectile-global-mode)
+(setq projectile-mode-line '(:eval (format " Proj[%s]" (projectile-project-name))))
 
 
 
