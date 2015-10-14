@@ -52,6 +52,8 @@
 
 (display-time)
 
+(setq inhibit-splash-screen t)
+
 ;; Do not generate backup files, we have git nowadays.
 (setq make-backup-files nil)
 
