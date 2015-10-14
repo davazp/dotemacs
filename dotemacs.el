@@ -92,7 +92,6 @@ buffers."
 (define-key global-map (kbd "C-;") 'switch-to-other-buffer)
 
 
-
 ;;;; -----------------------------------------------------------------
 ;;;; Convenience
 ;;;; -----------------------------------------------------------------
@@ -182,6 +181,13 @@ buffers."
 (setq yas-prompt-functions '(yas-ido-prompt))
 
 
+;;; Helm
+
+(unless (package-installed-p 'helm)
+  (package-install 'helm))
+
+(helm-mode)
+
 ;;; Projectile
 
 (unless (package-installed-p 'projectile)
@@ -190,6 +196,13 @@ buffers."
 (projectile-global-mode)
 (setq projectile-mode-line '(:eval (format " Proj[%s]" (projectile-project-name))))
 (setq projectile-switch-project-action 'projectile-dired)
+
+(unless (package-installed-p 'helm-projectile)
+  (package-install 'helm-projectile))
+
+(helm-projectile-on)
+
+(setq helm-projectile-switch-project)
 
 
 ;;;; -----------------------------------------------------------------
