@@ -187,7 +187,7 @@ buffers."
 
 (projectile-global-mode)
 (setq projectile-mode-line '(:eval (format " Proj[%s]" (projectile-project-name))))
-
+(setq projectile-switch-project-action 'projectile-dired)
 
 
 ;;;; -----------------------------------------------------------------
