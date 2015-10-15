@@ -143,6 +143,8 @@ buffers."
 (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
 (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
 
+(define-key helm-command-map (kbd "o") 'helm-occur)
+
 
 
 ;;; Smart parents
