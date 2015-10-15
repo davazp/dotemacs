@@ -62,6 +62,9 @@
 ;; but use hippie-expand instead of raw dabbrev-expand!
 (define-key global-map (kbd "M-/") 'hippie-expand)
 
+(setq browse-url-browser-function 'browse-url-chromium)
+
+
 (setq hippie-expand-try-functions-list
       '(try-expand-dabbrev try-expand-dabbrev-all-buffers try-expand-dabbrev-from-kill
                            try-complete-file-name-partially try-complete-file-name
