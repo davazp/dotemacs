@@ -73,15 +73,6 @@
 ;; but if some mode use them, then set it to 4 spaces
 (setq-default tab-width 4)
 
-;; Use ido to find buffers and files. In addition of that, we define
-;; the `switch-to-other-buffer' function to explote the locality of
-;; references: I work most of the time with one or two buffers at the
-;; same time.
-
-(ido-mode 1)
-(setq ido-use-filename-at-point 'guess)
-(setq read-file-name-completion-ignore-case t)
-
 (defun switch-to-other-buffer ()
   "Switch to the most recently visited buffer. Calling this
 command repeatly will switch between the last two most recent
