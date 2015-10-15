@@ -144,6 +144,20 @@ buffers."
 (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
 
 
+
+;;; Smart parents
+
+(unless (package-installed-p 'smartparens)
+  (package-install 'smartparens))
+
+(require 'smartparens-config)
+(require 'smartparens-html)
+
+(smartparens-global-mode)
+(smartparens-strict-mode)
+(sp-use-paredit-bindings)
+
+
 ;;;; -----------------------------------------------------------------
 ;;;; Tools
 ;;;; -----------------------------------------------------------------
@@ -213,10 +227,6 @@ buffers."
 ;;;; -----------------------------------------------------------------
 ;;;; Programming Languages and Markup
 ;;;; -----------------------------------------------------------------
-
-;; Install paredit for a pleasent Lisp coding experience
-(unless (package-installed-p 'paredit)
-  (package-install 'paredit))
 
 (unless (package-installed-p 'paren-face)
   (package-install 'paren-face))
