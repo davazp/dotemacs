@@ -202,8 +202,6 @@ buffers."
 
 (helm-projectile-on)
 
-(setq helm-projectile-switch-project)
-
 
 ;;;; -----------------------------------------------------------------
 ;;;; Programming Languages and Markup
