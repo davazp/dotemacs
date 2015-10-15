@@ -154,7 +154,7 @@ buffers."
 (require 'smartparens-html)
 
 (smartparens-global-mode)
-(smartparens-strict-mode)
+(smartparens-global-strict-mode)
 (sp-use-paredit-bindings)
 
 
@@ -266,8 +266,6 @@ buffers."
 
 ;;;; Emacs Lisp
 
-(add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
-
 ;; Nice slime-like navigation for Emacs lisp with M-. and M-,
 (unless (package-installed-p 'elisp-slime-nav)
   (package-install 'elisp-slime-nav))
@@ -285,13 +283,7 @@ buffers."
 (eval-after-load "dash" '(dash-enable-font-lock))
 
 
-;;;; Scheme
-(add-hook 'scheme-mode-hook 'enable-paredit-mode)
-
-
 ;;;; Common Lisp
-
-(add-hook 'lisp-mode-hook 'enable-paredit-mode)
 
 (unless (package-installed-p 'slime)
   (package-install 'slime))
