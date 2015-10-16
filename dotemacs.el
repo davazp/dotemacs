@@ -160,6 +160,7 @@ buffers."
   :config
   (helm-descbinds-mode))
 
+(use-package helm-swoop)
 
 ;;; Smart parents
 
