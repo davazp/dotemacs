@@ -79,7 +79,7 @@
 ;; dabbrev expands preserving the orignial case
 (setq dabbrev-case-replace nil)
 ;; but use hippie-expand instead of raw dabbrev-expand!
-(define-key global-map (kbd "M-/") 'hippie-expand)
+(bind-key "M-/" 'hippie-expand)
 
 (setq browse-url-browser-function 'browse-url-chromium)
 
@@ -102,7 +102,7 @@ buffers."
   (interactive)
   (switch-to-buffer (other-buffer)))
 
-(define-key global-map (kbd "C-;") 'davazp/switch-to-other-buffer)
+(bind-key "C-;" 'davazp/switch-to-other-buffer)
 
 
 ;;;; -----------------------------------------------------------------
