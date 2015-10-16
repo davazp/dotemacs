@@ -64,6 +64,14 @@
 (setq delete-old-versions -1)
 (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
 
+;; Save History
+(savehist-mode)
+(setq history-delete-duplicates t)
+
+;; Save place
+(require 'saveplace)
+(setq-default save-place t)
+
 ;; dabbrev expands preserving the orignial case
 (setq dabbrev-case-replace nil)
 ;; but use hippie-expand instead of raw dabbrev-expand!
