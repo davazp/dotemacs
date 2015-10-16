@@ -160,7 +160,12 @@ buffers."
   :config
   (helm-descbinds-mode))
 
-(use-package helm-swoop)
+(use-package helm-swoop
+  :config
+  (bind-key "C-r" 'helm-previous-line helm-swoop-map)
+  (bind-key "C-s" 'helm-next-line helm-swoop-map)
+  (bind-key "C-r" 'helm-previous-line helm-multi-swoop-map)
+  (bind-key "C-s" 'helm-next-line helm-multi-swoop-map))
 
 ;;; Smart parents
 
