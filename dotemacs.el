@@ -38,6 +38,12 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+
+(require 'use-package)
+(setq use-package-always-ensure t)
+
 
 ;;;; -----------------------------------------------------------------
 ;;;; General settings
@@ -76,14 +82,14 @@
 ;; but if some mode use them, then set it to 4 spaces
 (setq-default tab-width 4)
 
-(defun switch-to-other-buffer ()
+(defun davazp/switch-to-other-buffer ()
   "Switch to the most recently visited buffer. Calling this
 command repeatly will switch between the last two most recent
 buffers."
   (interactive)
   (switch-to-buffer (other-buffer)))
 
-(define-key global-map (kbd "C-;") 'switch-to-other-buffer)
+(define-key global-map (kbd "C-;") 'davazp/switch-to-other-buffer)
 
 
 ;;;; -----------------------------------------------------------------
@@ -101,63 +107,54 @@ buffers."
 
 ;;; Zooming
 
-(unless (package-installed-p 'zoom-frm)
-  (package-install 'zoom-frm))
+(use-package zoom-frm)
 
 
 ;;; Multiple Cursors and expand-region
 
-(unless (package-installed-p 'multiple-cursors)
-  (package-install 'multiple-cursors))
+(use-package multiple-cursors
+  :bind ("C-$" . mc/mark-next-like-this))
 
-(unless (package-installed-p 'expand-region)
-  (package-install 'expand-region))
-
-(define-key global-map (kbd "C-#") 'er/expand-region)
-(define-key global-map (kbd "C-$") 'mc/mark-next-like-this)
+(use-package expand-region
+  :bind ("C-#" . er/expand-region))
 
 
 ;;; String utilities
 
-(unless (package-installed-p 's)
-  (package-install 's))
-
-(require 's)
+(use-package s)
 
 
 ;;; Helm
 
-(unless (package-installed-p 'helm)
-  (package-install 'helm))
+(use-package helm
+  :config
+  (require 'helm-config))
 
-(require 'helm-config)
 
-(helm-mode)
+;; (helm-mode)
 
-(define-key global-map (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "C-x b") 'helm-mini)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-(define-key global-map (kbd "M-y") 'helm-show-kill-ring)
+;; (define-key global-map (kbd "M-x") 'helm-M-x)
+;; (global-set-key (kbd "C-x b") 'helm-mini)
+;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
+;; (define-key global-map (kbd "M-y") 'helm-show-kill-ring)
 
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
-(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+;; (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
+;; (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+;; (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
 
-(define-key helm-command-map (kbd "o") 'helm-occur)
+;; (define-key helm-command-map (kbd "o") 'helm-occur)
 
 
 
 ;;; Smart parents
 
-(unless (package-installed-p 'smartparens)
-  (package-install 'smartparens))
+(use-package smartparens
+  :config
+  (require 'smartparens-config)
+  (smartparens-global-mode)
+  (smartparens-global-strict-mode)
+  (sp-use-paredit-bindings))
 
-(require 'smartparens-config)
-(require 'smartparens-html)
-
-(smartparens-global-mode)
-(smartparens-global-strict-mode)
-(sp-use-paredit-bindings)
 
 
 ;;;; -----------------------------------------------------------------
@@ -175,18 +172,17 @@ buffers."
 (setq dired-omit-files "^\\.?#\\|^\\.")
 (add-hook 'dired-mode-hook 'dired-omit-mode)
 
-(unless (package-installed-p 'wgrep)
-  (package-install 'wgrep))
+(use-package wgrep)
 
 
 ;;; MaGIT -- Git integration with GNU/Emacs
 
-(unless (package-installed-p 'magit)
-  (package-install 'magit))
+(use-package magit
+  :bind ("<f12>" . magit-status)
+  :config
+  (setq magit-popup-show-common-commands nil)
+  (setq magit-last-seen-setup-instructions "1.4.0"))
 
-(setq magit-popup-show-common-commands nil)
-(setq magit-last-seen-setup-instructions "1.4.0")
-(define-key global-map (kbd "<f12>") 'magit-status)
 
 
 ;;; Grep and others
@@ -198,31 +194,26 @@ buffers."
 
 ;;; Yasnippet
 
-(unless (package-installed-p 'yasnippet)
-  (package-install 'yasnippet))
-
 (let ((base (file-name-directory (or load-file-name (buffer-file-name)))))
-  (setq yas-snippet-dirs (list (concat base "snippets/"))))
+  (use-package yasnippet
+    :config 
+    (setq yas-snippet-dirs (list (concat base "snippets/")))
+    (yas-global-mode)
+    (setq yas-prompt-functions '(yas-ido-prompt))))
 
-(yas-global-mode)
-
-(setq yas-prompt-functions '(yas-ido-prompt))
 
 
 ;;; Projectile
 
-(unless (package-installed-p 'projectile)
-  (package-install 'projectile))
+(use-package projectile
+  :config
+  (projectile-global-mode)
+  (setq projectile-mode-line '(:eval (format " Proj[%s]" (projectile-project-name))))
+  (setq projectile-switch-project-action 'projectile-dired))
 
-(projectile-global-mode)
-(setq projectile-mode-line '(:eval (format " Proj[%s]" (projectile-project-name))))
-(setq projectile-switch-project-action 'projectile-dired)
-
-(unless (package-installed-p 'helm-projectile)
-  (package-install 'helm-projectile))
-
-(helm-projectile-on)
-
+(use-package helm-projectile
+  :config
+  (helm-projectile-on))
 
 
 
@@ -230,88 +221,69 @@ buffers."
 ;;;; Programming Languages and Markup
 ;;;; -----------------------------------------------------------------
 
-(unless (package-installed-p 'paren-face)
-  (package-install 'paren-face))
-
-(global-paren-face-mode 1)
+(use-package paren-face
+  :config 
+  (global-paren-face-mode 1))
 
 
 ;;; Support SASS
 
-(unless (package-installed-p 'scss-mode)
-  (package-install 'scss-mode))
-
-(add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
+(use-package scss-mode
+  :mode ("\\.scss\\'" . scss-mode))
 
 
 ;;; Support for Markdown, YAML and JSON.
-
-(unless (package-installed-p 'markdown-mode)
-  (package-install 'markdown-mode))
-
-(unless (package-installed-p 'yaml-mode)
-  (package-install 'yaml-mode))
-
-(unless (package-installed-p 'json-mode)
-  (package-install 'json-mode)
-  (setq json-mode))
+(use-package markdown-mode)
+(use-package yaml-mode)
+(use-package json-mode)
 
 
 ;;; Haskell
 
-(unless (package-installed-p 'haskell-mode)
-  (package-install 'haskell-mode))
-
-(add-hook 'haskell-mode-hook 'haskell-indentation-mode)
-(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+(use-package haskell-mode
+  :config
+  (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+  (add-hook 'haskell-mode-hook 'interactive-haskell-mode))
 
 
 ;;;; Emacs Lisp
 
 ;; Nice slime-like navigation for Emacs lisp with M-. and M-,
-(unless (package-installed-p 'elisp-slime-nav)
-  (package-install 'elisp-slime-nav))
+(use-package elisp-slime-nav
+  :config
+  (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
+    (add-hook hook 'turn-on-elisp-slime-nav-mode)))
 
-(require 'elisp-slime-nav)
-(dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
-  (add-hook hook 'turn-on-elisp-slime-nav-mode))
 
 ;; Show parameter information in the minibuffer
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 
-(unless (package-installed-p 'dash)
-  (package-install 'dash))
-
-(eval-after-load "dash" '(dash-enable-font-lock))
+(use-package dash
+  :config 
+  (dash-enable-font-lock))
 
 
 ;;;; Common Lisp
 
-(unless (package-installed-p 'slime)
-  (package-install 'slime))
-
-(setq inferior-lisp-program (locate-file "sbcl" exec-path))
-(slime-setup '(slime-fancy))
-
+(use-package slime
+  :config
+  (setq inferior-lisp-program (locate-file "sbcl" exec-path))
+  (slime-setup '(slime-fancy)))
 
 
 ;;;; Javascript
 
-(unless (package-installed-p 'js2-mode)
-  (package-install 'js2-mode))
-
-(require 'js2-mode)
-
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-(setq-default js2-basic-offset 2)
-(setq-default js-indent-level 2)
-
-(setq js2-include-browser-externs t
-      js2-include-node-externs t)
+(use-package js2-mode
+  :mode ("\\.js$" . js2-mode)
+  :config
+  (setq-default js2-basic-offset 2)
+  (setq-default js-indent-level 2)
+  (setq js2-include-browser-externs t
+        js2-include-node-externs t))
 
 ;;; Add support in ffap for finding files loaded from node_modules.
 (require 'ffap)
-(defun ffap-nodejs-module (name)
+(defun davazp/ffap-nodejs-module (name)
   (unless (or (string-prefix-p "/" name)
               (string-prefix-p "./" name)
               (string-prefix-p "../" name))
@@ -323,12 +295,11 @@ buffers."
                           filename))))))
       (and base (concat base "node_modules/" name)))))
 
-(add-to-list 'ffap-alist '(js-mode . ffap-nodejs-module) t)
-(add-to-list 'ffap-alist '(js2-mode . ffap-nodejs-module) t)
+(add-to-list 'ffap-alist '(js-mode . davazp/ffap-nodejs-module) t)
+(add-to-list 'ffap-alist '(js2-mode . davazp/ffap-nodejs-module) t)
 
 
-(unless (package-installed-p 'nodejs-repl)
-  (package-install 'nodejs-repl))
+(use-package nodejs-repl)
 
 (defun js-send-to-nodejs-repl ()
   (interactive)
