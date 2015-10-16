@@ -147,6 +147,7 @@ buffers."
   :bind ("C-x b" . helm-mini)
   :bind ("C-x C-b" . helm-buffers-list)
   :bind ("C-x C-f" . helm-find-files)
+  :bind ("C-h a" . helm-apropos)
   ;; :bind ("M-y" . helm-show-kill-ring)
   :init
   (bind-key "<tab>" 'helm-execute-persistent-action helm-map) 
