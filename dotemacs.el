@@ -141,22 +141,18 @@ buffers."
 
 (use-package helm
   :config
-  (require 'helm-config))
-
-
-;; (helm-mode)
-
-;; (define-key global-map (kbd "M-x") 'helm-M-x)
-;; (global-set-key (kbd "C-x b") 'helm-mini)
-;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
-;; (define-key global-map (kbd "M-y") 'helm-show-kill-ring)
-
-;; (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
-;; (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-;; (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
-
-;; (define-key helm-command-map (kbd "o") 'helm-occur)
-
+  (require 'helm-config)
+  (helm-mode)
+  :bind ("M-x" . helm-M-x)
+  :bind ("C-x b" . helm-mini)
+  :bind ("C-x C-b" . helm-buffers-list)
+  :bind ("C-x C-f" . helm-find-files)
+  ;; :bind ("M-y" . helm-show-kill-ring)
+  :init
+  (bind-key "<tab>" 'helm-execute-persistent-action helm-map) 
+  (bind-key "C-i" 'helm-execute-persistent-action helm-map)
+  (bind-key "C-z" 'helm-select-action helm-map) ; list actions using C-z
+  (bind-key "o" 'helm-occur helm-command-map))
 
 
 ;;; Smart parents
