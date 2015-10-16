@@ -60,8 +60,9 @@
 
 (setq inhibit-splash-screen t)
 
-;; Do not generate backup files, we have git nowadays.
-(setq make-backup-files nil)
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+(setq delete-old-versions -1)
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
 
 ;; dabbrev expands preserving the orignial case
 (setq dabbrev-case-replace nil)
