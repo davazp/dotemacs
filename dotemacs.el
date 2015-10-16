@@ -252,6 +252,11 @@ buffers."
 (use-package scss-mode
   :mode ("\\.scss\\'" . scss-mode))
 
+(use-package helm-css-scss
+  :config
+  (bind-key "M-." 'helm-css-scss scss-mode-map)
+  (bind-key "M-." 'helm-css-scss css-mode-map))
+
 
 ;;; Support for Markdown, YAML and JSON.
 (use-package markdown-mode)
