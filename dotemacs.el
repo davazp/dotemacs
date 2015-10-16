@@ -156,6 +156,11 @@ buffers."
   (bind-key "o" 'helm-occur helm-command-map))
 
 
+(use-package helm-descbinds
+  :config
+  (helm-descbinds-mode))
+
+
 ;;; Smart parents
 
 (use-package smartparens
