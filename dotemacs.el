@@ -72,6 +72,10 @@
 (require 'saveplace)
 (setq-default save-place t)
 
+;; Buffers and window configuration persistence
+(desktop-save-mode 1)
+
+
 ;; dabbrev expands preserving the orignial case
 (setq dabbrev-case-replace nil)
 ;; but use hippie-expand instead of raw dabbrev-expand!
