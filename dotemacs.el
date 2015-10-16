@@ -174,7 +174,9 @@ buffers."
   (require 'smartparens-config)
   (smartparens-global-mode)
   (smartparens-global-strict-mode)
-  (sp-use-paredit-bindings))
+  (sp-use-paredit-bindings)
+  (bind-key "C-j" 'sp-newline sp-keymap))
+
 
 
 
