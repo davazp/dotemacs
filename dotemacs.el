@@ -156,7 +156,17 @@ buffers."
   (bind-key "<tab>" 'helm-execute-persistent-action helm-map) 
   (bind-key "C-i" 'helm-execute-persistent-action helm-map)
   (bind-key "C-z" 'helm-select-action helm-map) ; list actions using C-z
-  (bind-key "o" 'helm-occur helm-command-map))
+  (bind-key "o" 'helm-occur helm-command-map)
+
+  (setq helm-mode-fuzzy-match t
+        helm-completion-in-region-fuzzy-match t
+        helm-recentf-fuzzy-match t
+        helm-buffers-fuzzy-matching t
+        helm-M-x-fuzzy-match t
+        helm-semantic-fuzzy-match t
+        helm-imenu-fuzzy-match t
+        helm-apropos-fuzzy-match t
+        helm-lisp-fuzzy-completion t))
 
 
 (use-package helm-descbinds
