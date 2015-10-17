@@ -237,8 +237,7 @@ buffers."
     :config 
     (setq yas-snippet-dirs (list (concat base "snippets/")))
     (yas-global-mode)
-    (setq yas-prompt-functions '(yas-ido-prompt))))
-
+    (setq yas-prompt-functions '(yas-completing-prompt))))
 
 
 ;;; Projectile
