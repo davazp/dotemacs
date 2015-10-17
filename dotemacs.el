@@ -294,6 +294,7 @@ buffers."
 
 ;; Nice slime-like navigation for Emacs lisp with M-. and M-,
 (use-package elisp-slime-nav
+  :diminish elisp-slime-nav-mode
   :config
   (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
     (add-hook hook 'turn-on-elisp-slime-nav-mode)))
