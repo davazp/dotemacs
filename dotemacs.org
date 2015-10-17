@@ -106,6 +106,7 @@
 ** Helm
 #+BEGIN_SRC emacs-lisp
   (use-package helm
+    :diminish helm-mode
     :bind ("M-x" . helm-M-x)
     :bind ("C-x b" . helm-mini)
     :bind ("C-x C-b" . helm-buffers-list)
@@ -145,6 +146,7 @@
 ** Smartparens
 #+BEGIN_SRC emacs-lisp
   (use-package smartparens
+    :diminish smartparens-mode
     :config
     (require 'smartparens-config)
     (smartparens-global-mode)
@@ -208,12 +210,13 @@
 #+END_SRC
 ** yasnippet
 #+BEGIN_SRC emacs-lisp
-(let ((base (file-name-directory (or load-file-name (buffer-file-name)))))
-  (use-package yasnippet
-    :config
-    (setq yas-snippet-dirs (list (concat base "snippets/")))
-    (yas-global-mode)
-    (setq yas-prompt-functions '(yas-ido-prompt))))
+  (let ((base (file-name-directory (or load-file-name (buffer-file-name)))))
+    (use-package yasnippet
+      :diminish yas-minor-mode
+      :config
+      (setq yas-snippet-dirs (list (concat base "snippets/")))
+      (yas-global-mode)
+      (setq yas-prompt-functions '(yas-ido-prompt))))
 #+END_SRC
 ** Projectile
 #+BEGIN_SRC emacs-lisp
