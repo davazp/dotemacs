@@ -1,5 +1,7 @@
-#+startup: indent
 #+title: My Emacs configuration
+#+author: David Vázquez
+#+email: davazp@gmail.com
+#+startup: indent
 
 * Initialization
 ** Package
