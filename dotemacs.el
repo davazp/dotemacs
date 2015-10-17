@@ -199,6 +199,14 @@ buffers."
 ;;;; -----------------------------------------------------------------
 
 
+;;; Eshell/Shell
+(defun davazp/eshell-hook ()
+  (bind-key "M-r" 'helm-eshell-history eshell-mode-map))
+
+(add-hook 'eshell-mode-hook 'davazp/eshell-hook)
+
+(bind-key "C-c C-l" 'helm-comint-input-ring shell-mode-map)
+
 ;;; Dired
 
 (require 'dired-x)
