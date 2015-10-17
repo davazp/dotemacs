@@ -301,7 +301,9 @@ buffers."
 
 
 ;; Show parameter information in the minibuffer
+(diminish 'eldoc-mode)
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
+
 
 (use-package dash
   :config 
@@ -371,4 +373,3 @@ buffers."
 ;;; End:
 
 ;;; dotemacs.el ends here
-
