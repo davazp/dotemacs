@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: script
+# key: script
+# --
+<script src="$1"></script>
