@@ -1,0 +1,312 @@
+#+startup: indent
+#+title: My Emacs configuration
+
+* Initialization
+** Package
+   #+BEGIN_SRC emacs-lisp
+     (require 'package)
+     (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+     (package-initialize)
+
+     (unless (package-installed-p 'use-package)
+       (package-install 'use-package))
+   #+END_SRC
+** Use-package
+   #+BEGIN_SRC emacs-lisp
+     (require 'use-package)
+     (setq use-package-always-ensure t)
+   #+END_SRC
+
+** Emacs Lisp Libraries
+#+BEGIN_SRC emacs-lisp
+(use-package s)
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+(use-package dash
+  :config
+  (dash-enable-font-lock))
+#+END_SRC
+
+* General
+** Settings
+#+BEGIN_SRC emacs-lisp
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
+  (display-time)
+  (setq inhibit-splash-screen t)
+  (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 4)
+#+END_SRC
+
+** Persistence
+#+BEGIN_EXAMPLE
+(savehist-mode)
+(setq history-delete-duplicates t)
+#+END_EXAMPLE
+
+#+BEGIN_SRC emaslisp
+(require 'saveplace)
+(setq-default save-place t)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(desktop-save-mode 1)
+#+END_SRC
+
+** Expansion
+#+BEGIN_SRC emacs-lisp
+  ;; dabbrev expands preserving the orignial case
+  (setq dabbrev-case-replace nil)
+  ;; but use hippie-expand instead of raw dabbrev-expand!
+  (bind-key "M-/" 'hippie-expand)
+
+  (setq hippie-expand-try-functions-list
+        '(try-expand-dabbrev try-expand-dabbrev-all-buffers try-expand-dabbrev-from-kill
+                             try-complete-file-name-partially try-complete-file-name
+                             try-expand-all-abbrevs try-expand-list try-expand-line
+                             try-complete-lisp-symbol-partially try-complete-lisp-symbol))
+
+#+END_SRC
+
+** Last Buffer Switcher
+#+BEGIN_SRC emacs-lisp
+  (defun davazp/switch-to-other-buffer ()
+    "Switch to the most recently visited buffer. Calling this
+  command repeatly will switch between the last two most recent
+  buffers."
+    (interactive)
+    (switch-to-buffer (other-buffer)))
+
+  (bind-key "C-;" 'davazp/switch-to-other-buffer)
+#+END_SRC
+
+* Convenience
+** Diff
+#+BEGIN_SRC emacs-lisp
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+(setq ediff-split-window-function 'split-window-horizontally)
+#+END_SRC
+** Zooming
+#+BEGIN_SRC emacs-lisp
+(use-package zoom-frm)
+#+END_SRC
+** Multiple Cursors
+#+BEGIN_SRC emacs-lisp
+(use-package multiple-cursors
+  :bind ("C-$" . mc/mark-next-like-this))
+#+END_SRC
+** Expand Region
+#+BEGIN_SRC emacs-lisp
+(use-package expand-region
+  :bind ("C-#" . er/expand-region))
+#+END_SRC
+** Helm
+#+BEGIN_SRC emacs-lisp
+(use-package helm
+  :bind ("M-x" . helm-M-x)
+  :bind ("C-x b" . helm-mini)
+  :bind ("C-x C-b" . helm-buffers-list)
+  :bind ("C-x C-f" . helm-find-files)
+  :bind ("C-h a" . helm-apropos)
+  ;; :bind ("M-y" . helm-show-kill-ring)
+  :config
+  (require 'helm-config)
+  (helm-mode)
+  (bind-key "<tab>" 'helm-execute-persistent-action helm-map)
+  (bind-key "C-i" 'helm-execute-persistent-action helm-map)
+  (bind-key "C-z" 'helm-select-action helm-map) ; list actions using C-z
+  (bind-key "o" 'helm-occur helm-command-map))
+
+
+(use-package helm-descbinds
+  :config
+  (helm-descbinds-mode))
+
+(use-package helm-swoop
+  :config
+  (bind-key "C-r" 'helm-previous-line helm-swoop-map)
+  (bind-key "C-s" 'helm-next-line helm-swoop-map)
+  (bind-key "C-r" 'helm-previous-line helm-multi-swoop-map)
+  (bind-key "C-s" 'helm-next-line helm-multi-swoop-map))
+#+END_SRC
+** Smartparens
+#+BEGIN_SRC emacs-lisp
+  (use-package smartparens
+    :config
+    (require 'smartparens-config)
+    (smartparens-global-mode)
+    (smartparens-global-strict-mode)
+    (sp-use-paredit-bindings)
+    (bind-key "C-j" 'sp-newline sp-keymap))
+#+END_SRC
+** Paren face
+#+BEGIN_SRC emacs-lisp
+(use-package paren-face
+  :config
+  (global-paren-face-mode 1))
+#+END_SRC
+
+* Tools
+** org-mode
+#+BEGIN_SRC emacs-lisp
+  (setq org-startup-indented t)
+  (setq org-src-fontify-natively t)
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+(defface org-block-begin-line
+  '((t (:height 100 :underline "#505050" :foreground "#808080" :background "#202020")))
+  "Face used for the line delimiting the begin of source blocks.")
+
+(defface org-block-background
+  '((t (:background "#101010")))
+  "Face used for the source block background.")
+
+(defface org-block-end-line
+  '((t (:height 100 :overline "#505050" :foreground "#808080" :background "#202020")))
+  "Face used for the line delimiting the end of source blocks.")
+#+END_SRC
+
+** dired
+#+BEGIN_SRC emacs-lisp
+(require 'dired-x)
+(require 'dired-aux)
+
+(setq dired-listing-switches "-lh")
+
+(setq dired-omit-files "^\\.?#\\|^\\.")
+(add-hook 'dired-mode-hook 'dired-omit-mode)
+#+END_SRC
+** wgrep
+#+BEGIN_SRC wgrep
+(use-package wgrep)
+#+END_SRC
+** magit
+#+BEGIN_SRC emacs-lisp
+(use-package magit
+  :bind ("<f12>" . magit-status)
+  :config
+  (setq magit-popup-show-common-commands nil)
+  (setq magit-last-seen-setup-instructions "1.4.0"))
+#+END_SRC
+** grep
+#+BEGIN_SRC emacs-lisp
+(require 'grep)
+(grep-apply-setting 'grep-find-command '("find . -type f -exec grep -nH -i -e  {} +" . 37))
+#+END_SRC
+** yasnippet
+#+BEGIN_SRC emacs-lisp
+(let ((base (file-name-directory (or load-file-name (buffer-file-name)))))
+  (use-package yasnippet
+    :config
+    (setq yas-snippet-dirs (list (concat base "snippets/")))
+    (yas-global-mode)
+    (setq yas-prompt-functions '(yas-ido-prompt))))
+#+END_SRC
+** Projectile
+#+BEGIN_SRC emacs-lisp
+(use-package projectile
+  :config
+  (projectile-global-mode)
+  (setq projectile-mode-line '(:eval (format " Proj[%s]" (projectile-project-name))))
+  (setq projectile-switch-project-action 'projectile-dired))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package helm-projectile
+    :config
+    (helm-projectile-on))
+#+END_SRC
+
+* Programming
+** Sass
+#+BEGIN_SRC emacs-lisp
+  (use-package helm-css-scss
+    :config
+    (require 'css-mode)
+    (bind-key "M-." 'helm-css-scss css-mode-map))
+
+  (use-package scss-mode
+    :mode ("\\.scss\\'" . scss-mode)
+    :config
+    (bind-key "M-." 'helm-css-scss scss-mode-map))
+#+END_SRC
+** Markdown
+#+BEGIN_SRC emacs-lisp
+(use-package markdown-mode)
+#+END_SRC
+** YAML
+#+BEGIN_SRC emacs-lisp
+(use-package yaml-mode)
+#+END_SRC
+** JSON
+#+BEGIN_SRC emacs-lisp
+(use-package json-mode)
+#+END_SRC
+** Haskell
+#+BEGIN_SRC emacs-lisp
+(use-package haskell-mode
+  :config
+  (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+  (add-hook 'haskell-mode-hook 'interactive-haskell-mode))
+#+END_SRC
+** Emacs Lisp
+#+BEGIN_SRC emacs-lisp
+(use-package elisp-slime-nav
+  :config
+  (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
+    (add-hook hook 'turn-on-elisp-slime-nav-mode)))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+(add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
+#+END_SRC
+** Common Lisp
+#+BEGIN_SRC emacs-lisp
+(use-package slime
+  :config
+  (setq inferior-lisp-program (locate-file "sbcl" exec-path))
+  (slime-setup '(slime-fancy)))
+#+END_SRC
+** Javascript
+#+BEGIN_SRC emacs-lisp
+(use-package js2-mode
+  :mode ("\\.js$" . js2-mode)
+  :config
+  (setq-default js2-basic-offset 2)
+  (setq-default js-indent-level 2)
+  (setq js2-include-browser-externs t
+        js2-include-node-externs t))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+(require 'ffap)
+(defun davazp/ffap-nodejs-module (name)
+  (unless (or (string-prefix-p "/" name)
+              (string-prefix-p "./" name)
+              (string-prefix-p "../" name))
+    (let ((base (locate-dominating-file
+                 default-directory
+                 (lambda (dir)
+                   (let ((filename (concat dir "node_modules/" name)))
+                     (and (file-exists-p filename)
+                          filename))))))
+      (and base (concat base "node_modules/" name)))))
+
+(add-to-list 'ffap-alist '(js-mode . davazp/ffap-nodejs-module) t)
+(add-to-list 'ffap-alist '(js2-mode . davazp/ffap-nodejs-module) t)
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+(use-package nodejs-repl)
+
+(defun js-send-to-nodejs-repl ()
+  (interactive)
+  (let ((string (buffer-string)))
+    (nodejs-repl)
+    (nodejs-repl--send-string string)))
+#+END_SRC
+
+* Machine-specifig configuration
+#+BEGIN_SRC emacs-lisp
+(let ((machine-elisp-file (expand-file-name (concat system-name ".el"))))
+  (when (file-exists-p machine-elisp-file)
+    (load machine-elisp-file)))
+#+END_SRC
