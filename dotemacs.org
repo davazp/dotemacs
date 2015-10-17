@@ -105,32 +105,42 @@
 #+END_SRC
 ** Helm
 #+BEGIN_SRC emacs-lisp
-(use-package helm
-  :bind ("M-x" . helm-M-x)
-  :bind ("C-x b" . helm-mini)
-  :bind ("C-x C-b" . helm-buffers-list)
-  :bind ("C-x C-f" . helm-find-files)
-  :bind ("C-h a" . helm-apropos)
-  ;; :bind ("M-y" . helm-show-kill-ring)
-  :config
-  (require 'helm-config)
-  (helm-mode)
-  (bind-key "<tab>" 'helm-execute-persistent-action helm-map)
-  (bind-key "C-i" 'helm-execute-persistent-action helm-map)
-  (bind-key "C-z" 'helm-select-action helm-map) ; list actions using C-z
-  (bind-key "o" 'helm-occur helm-command-map))
+  (use-package helm
+    :bind ("M-x" . helm-M-x)
+    :bind ("C-x b" . helm-mini)
+    :bind ("C-x C-b" . helm-buffers-list)
+    :bind ("C-x C-f" . helm-find-files)
+    :bind ("C-h a" . helm-apropos)
+    ;; :bind ("M-y" . helm-show-kill-ring)
+    :config
+    (require 'helm-config)
+    (helm-mode)
+    (bind-key "<tab>" 'helm-execute-persistent-action helm-map)
+    (bind-key "C-i" 'helm-execute-persistent-action helm-map)
+    (bind-key "C-z" 'helm-select-action helm-map) ; list actions using C-z
+    (bind-key "o" 'helm-occur helm-command-map)
+
+    (setq helm-mode-fuzzy-match t
+          helm-completion-in-region-fuzzy-match t
+          helm-recentf-fuzzy-match t
+          helm-buffers-fuzzy-matching t
+          helm-M-x-fuzzy-match t
+          helm-semantic-fuzzy-match t
+          helm-imenu-fuzzy-match t
+          helm-apropos-fuzzy-match t
+          helm-lisp-fuzzy-completion t))
 
 
-(use-package helm-descbinds
-  :config
-  (helm-descbinds-mode))
+  (use-package helm-descbinds
+    :config
+    (helm-descbinds-mode))
 
-(use-package helm-swoop
-  :config
-  (bind-key "C-r" 'helm-previous-line helm-swoop-map)
-  (bind-key "C-s" 'helm-next-line helm-swoop-map)
-  (bind-key "C-r" 'helm-previous-line helm-multi-swoop-map)
-  (bind-key "C-s" 'helm-next-line helm-multi-swoop-map))
+  (use-package helm-swoop
+    :config
+    (bind-key "C-r" 'helm-previous-line helm-swoop-map)
+    (bind-key "C-s" 'helm-next-line helm-swoop-map)
+    (bind-key "C-r" 'helm-previous-line helm-multi-swoop-map)
+    (bind-key "C-s" 'helm-next-line helm-multi-swoop-map))
 #+END_SRC
 ** Smartparens
 #+BEGIN_SRC emacs-lisp
