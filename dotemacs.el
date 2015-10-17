@@ -143,16 +143,16 @@ buffers."
 ;;; Helm
 
 (use-package helm
-  :config
-  (require 'helm-config)
-  (helm-mode)
+  :diminish helm-mode
   :bind ("M-x" . helm-M-x)
   :bind ("C-x b" . helm-mini)
   :bind ("C-x C-b" . helm-buffers-list)
   :bind ("C-x C-f" . helm-find-files)
   :bind ("C-h a" . helm-apropos)
   ;; :bind ("M-y" . helm-show-kill-ring)
-  :init
+  :config
+  (require 'helm-config)
+  (helm-mode)
   (bind-key "<tab>" 'helm-execute-persistent-action helm-map) 
   (bind-key "C-i" 'helm-execute-persistent-action helm-map)
   (bind-key "C-z" 'helm-select-action helm-map) ; list actions using C-z
@@ -183,6 +183,7 @@ buffers."
 ;;; Smart parents
 
 (use-package smartparens
+  :diminish smartparens-mode
   :config
   (require 'smartparens-config)
   (smartparens-global-mode)
@@ -232,6 +233,7 @@ buffers."
 
 (let ((base (file-name-directory (or load-file-name (buffer-file-name)))))
   (use-package yasnippet
+    :diminish yas-minor-mode
     :config 
     (setq yas-snippet-dirs (list (concat base "snippets/")))
     (yas-global-mode)
@@ -264,13 +266,15 @@ buffers."
 
 ;;; Support SASS
 
-(use-package scss-mode
-  :mode ("\\.scss\\'" . scss-mode))
-
 (use-package helm-css-scss
   :config
-  (bind-key "M-." 'helm-css-scss scss-mode-map)
+  (require 'css-mode)
   (bind-key "M-." 'helm-css-scss css-mode-map))
+
+(use-package scss-mode
+  :mode ("\\.scss\\'" . scss-mode)
+  :config
+  (bind-key "M-." 'helm-css-scss scss-mode-map))
 
 
 ;;; Support for Markdown, YAML and JSON.
