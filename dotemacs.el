@@ -60,6 +60,9 @@
 
 (setq inhibit-splash-screen t)
 
+(setq confirm-kill-emacs #'yes-or-no-p)
+(fset 'yes-or-no-p #'y-or-n-p)
+
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 (setq delete-old-versions -1)
 (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
