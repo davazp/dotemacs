@@ -189,8 +189,8 @@ buffers."
   (smartparens-global-mode)
   (smartparens-global-strict-mode)
   (sp-use-paredit-bindings)
-  (bind-key "C-j" 'sp-newline sp-keymap))
-
+  (bind-key "C-j" 'sp-newline sp-keymap)
+  (sp-pair "(" ")" :wrap "M-("))
 
 
 
