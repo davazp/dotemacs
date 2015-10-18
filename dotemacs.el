@@ -113,6 +113,7 @@ buffers."
 ;; Smarter Modeline
 (use-package smart-mode-line
   :config
+  (setq sml/no-confirm-load-theme t)
   (sml/setup))
 
 
