@@ -199,6 +199,10 @@ buffers."
 ;;;; -----------------------------------------------------------------
 
 
+;;; Org-mode
+(setq org-startup-indented t)
+
+
 ;;; Eshell/Shell
 (defun davazp/eshell-hook ()
   (bind-key "M-r" 'helm-eshell-history eshell-mode-map))
