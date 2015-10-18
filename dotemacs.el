@@ -78,6 +78,8 @@
 ;; Buffers and window configuration persistence
 (desktop-save-mode 1)
 
+;; Enable semantic minor mode
+(semantic-mode)
 
 ;; dabbrev expands preserving the orignial case
 (setq dabbrev-case-replace nil)
