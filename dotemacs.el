@@ -215,6 +215,7 @@ buffers."
 
 ;;; Org-mode
 (setq org-startup-indented t)
+(setq org-src-fontify-natively t)
 (bind-key "C-c a" 'org-agenda)
 
 ;;; Eshell/Shell
