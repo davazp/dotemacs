@@ -309,8 +309,9 @@ buffers."
 
 
 ;; Show parameter information in the minibuffer
-(diminish 'eldoc-mode)
+(require 'eldoc)
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
+(diminish 'eldoc-mode)
 
 
 (use-package dash
