@@ -201,7 +201,7 @@ buffers."
 
 ;;; Org-mode
 (setq org-startup-indented t)
-
+(bind-key "C-c a" 'org-agenda)
 
 ;;; Eshell/Shell
 (defun davazp/eshell-hook ()
