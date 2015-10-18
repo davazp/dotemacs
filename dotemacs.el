@@ -117,6 +117,10 @@ buffers."
   (sml/setup))
 
 
+;; Cycle between different spacing styles, instead of just-one-space
+(bind-key "M-SPC" 'cycle-spacing)
+
+
 ;;;; -----------------------------------------------------------------
 ;;;; Convenience
 ;;;; -----------------------------------------------------------------
