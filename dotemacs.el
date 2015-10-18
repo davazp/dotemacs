@@ -110,6 +110,12 @@ buffers."
 (bind-key "C-;" 'davazp/switch-to-other-buffer)
 
 
+;; Smarter Modeline
+(use-package smart-mode-line
+  :config
+  (sml/setup))
+
+
 ;;;; -----------------------------------------------------------------
 ;;;; Convenience
 ;;;; -----------------------------------------------------------------
