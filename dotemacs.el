@@ -161,6 +161,7 @@ buffers."
   :bind ("C-x b" . helm-mini)
   :bind ("C-x C-b" . helm-buffers-list)
   :bind ("C-x C-f" . helm-find-files)
+  :bind ("C-x C-d" . helm-browse-project)
   :bind ("C-h a" . helm-apropos)
   ;; :bind ("M-y" . helm-show-kill-ring)
   :config
@@ -180,6 +181,9 @@ buffers."
         helm-imenu-fuzzy-match t
         helm-apropos-fuzzy-match t
         helm-lisp-fuzzy-completion t))
+
+
+(use-package helm-ls-git)
 
 
 (use-package helm-descbinds
@@ -272,12 +276,12 @@ buffers."
 (use-package projectile
   :config
   (projectile-global-mode)
-  (setq projectile-mode-line '(:eval (format " Proj[%s]" (projectile-project-name))))
-  (setq projectile-switch-project-action 'projectile-dired))
+  (setq projectile-mode-line '(:eval (format " Proj[%s]" (projectile-project-name)))))
 
 (use-package helm-projectile
   :config
-  (helm-projectile-on))
+  (helm-projectile-on)
+  (setq projectile-switch-project-action 'projectile-vc))
 
 
 
