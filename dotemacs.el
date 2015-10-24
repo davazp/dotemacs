@@ -268,7 +268,7 @@ buffers."
 (let ((base (file-name-directory (or load-file-name (buffer-file-name)))))
   (use-package yasnippet
     :diminish yas-minor-mode
-    :config 
+    :config
     (setq yas-snippet-dirs (list (concat base "snippets/")))
     (yas-global-mode)
     (setq yas-prompt-functions '(yas-completing-prompt))))
@@ -293,7 +293,7 @@ buffers."
 ;;;; -----------------------------------------------------------------
 
 (use-package paren-face
-  :config 
+  :config
   (global-paren-face-mode 1))
 
 
@@ -341,7 +341,7 @@ buffers."
 
 
 (use-package dash
-  :config 
+  :config
   (dash-enable-font-lock))
 
 
