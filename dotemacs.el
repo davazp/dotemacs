@@ -229,7 +229,9 @@ buffers."
 
 (add-hook 'eshell-mode-hook 'davazp/eshell-hook)
 
-(bind-key "C-c C-l" 'helm-comint-input-ring shell-mode-map)
+(bind-key "C-c C-l" 'helm-comint-input-ring comint-mode-map)
+(setq comint-prompt-read-only t)
+
 
 ;;; Dired
 
