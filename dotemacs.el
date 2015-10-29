@@ -307,7 +307,8 @@ buffers."
 (use-package scss-mode
   :mode ("\\.scss\\'" . scss-mode)
   :config
-  (bind-key "M-." 'helm-css-scss scss-mode-map))
+  (bind-key "M-." 'helm-css-scss scss-mode-map)
+  (setq css-indent-offset 2))
 
 
 ;;; Support for Markdown, YAML and JSON.
