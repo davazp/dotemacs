@@ -284,7 +284,7 @@ buffers."
 (use-package helm-projectile
   :config
   (helm-projectile-on)
-  (setq projectile-switch-project-action 'projectile-vc))
+  (setq projectile-switch-project-action 'projectile-find-file))
 
 
 
