@@ -368,7 +368,12 @@ buffers."
   (setq-default js2-basic-offset 2)
   (setq-default js-indent-level 2)
   (setq js2-include-browser-externs t
-        js2-include-node-externs t))
+        js2-include-node-externs t
+        js2-strict-inconsistent-return-warning nil)
+
+  (setq js2-global-externs '("angular" "describe" "it")))
+
+
 
 ;;; Add support in ffap for finding files loaded from node_modules.
 (require 'ffap)
