@@ -203,12 +203,18 @@ buffers."
   :diminish smartparens-mode
   :config
   (require 'smartparens-config)
-  (smartparens-global-mode)
-  (smartparens-global-strict-mode)
-  (sp-use-paredit-bindings)
-  (bind-key "C-j" 'sp-newline sp-keymap)
-  (sp-pair "(" ")" :wrap "M-(")
-  (setq sp-highlight-pair-overlay nil))
+  (setq sp-ignore-modes-list '(lisp-mode scheme-mode emacs-lisp-mode))
+  (smartparens-global-mode))
+
+
+;;; Paredit
+
+(use-package paredit
+  :diminish paredit-mode
+  :config
+  (add-hook 'scheme-mode-hook 'enable-paredit-mode
+  (add-hook 'lisp-mode-hook 'enable-paredit-mode)
+  (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)))
 
 
 
