@@ -283,9 +283,9 @@ buffers."
 ;;; Projectile
 
 (use-package projectile
+  :diminish projectile-mode
   :config
-  (projectile-global-mode)
-  (setq projectile-mode-line '(:eval (format " Proj[%s]" (projectile-project-name)))))
+  (projectile-global-mode))
 
 (use-package helm-projectile
   :config
