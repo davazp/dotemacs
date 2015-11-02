@@ -434,7 +434,7 @@ buffers."
                   (make-source "Services" "service")
                   (make-source "Factory" "factory")
                   (make-source "States" "state")
-                  (make-source "Modules" "Modules"))))))
+                  (make-source "Modules" "modules"))))))
 
 
 
