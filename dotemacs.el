@@ -481,7 +481,7 @@ buffers."
                   :printer (lambda (candidate)
                              (cl-destructuring-bind (description context) candidate
                                (concat (propertize
-                                        (concat (string-join context " / ") " / ")
+                                        (concat (mapconcat 'identity context " / ") " / ")
                                         'face 'shadow)
                                        (propertize description 'face 'bold)))))))
 
