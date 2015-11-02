@@ -419,7 +419,7 @@ buffers."
                                (list (match-string 1 line)
                                      (match-string 2 line))))
                            "*.js"
-                           "*/node_modules/*"
+                           '("*/node_modules/*" "*/bower_components/*")
                            dir)))
     (cl-flet ((make-source
                (title kind)
@@ -468,7 +468,7 @@ buffers."
                                    (reverse (mapcar #'car context))))
                             (t (error "Unknown type '%s'" type))))))
                      "*.js"
-                     "*/node_modules/*"
+                     '("*/node_modules/*" "*/bower_components/*")
                      dir)))
 
 
