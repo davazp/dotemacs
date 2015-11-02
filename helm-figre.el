@@ -24,6 +24,7 @@
 
 ;;; Code:
 
+(require 'dash)
 (require 'cl-lib)
 
 (defun helm-figre-find (regexp fn &optional name exclude dir)
@@ -36,9 +37,12 @@ elements of the form
    (RESULT FILENAME LINE)
 
 where RESULT is the returned value of FN on the match."
+  (setq exclude (if (listp exclude) exclude (list exclude)))
   (with-temp-buffer
     (let* ((name-args (if name `("-name" ,name)))
-           (exclude-args (if exclude `("-not" "-path" ,exclude)))
+           (exclude-args (-flatten (mapcar (lambda (path)
+                                             `("-not" "-path" ,path))
+                                           exclude)))
            (args `(,(expand-file-name (or dir default-directory))
                    "-maxdepth" "10"
                    "-type" "f"
