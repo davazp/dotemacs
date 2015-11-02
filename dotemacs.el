@@ -44,6 +44,8 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+(require 'cl-lib)
+
 
 ;;;; -----------------------------------------------------------------
 ;;;; General settings
@@ -167,7 +169,7 @@ buffers."
   :config
   (require 'helm-config)
   (helm-mode)
-  (bind-key "<tab>" 'helm-execute-persistent-action helm-map) 
+  (bind-key "<tab>" 'helm-execute-persistent-action helm-map)
   (bind-key "C-i" 'helm-execute-persistent-action helm-map)
   (bind-key "C-z" 'helm-select-action helm-map) ; list actions using C-z
   (bind-key "o" 'helm-occur helm-command-map)
@@ -185,6 +187,7 @@ buffers."
 
 (use-package helm-ls-git)
 
+(require 'helm-figre)
 
 (use-package helm-descbinds
   :config
@@ -401,6 +404,86 @@ buffers."
     (nodejs-repl)
     (nodejs-repl--send-string string)))
 
+
+
+(defun davazp/helm-angular (dir)
+  "Find angular entities in the current project."
+  (interactive
+   (list
+    (locate-dominating-file default-directory ".git")))
+  (let* ((regexp "\\b\\(service\\|factory\\|module\\|controller\\|state\\|directive\\)[[:blank:]]*([[:blank:]]*'\\([^']*\\)'")
+         (entities
+          (helm-figre-find regexp
+                           (lambda (line)
+                             (when (string-match regexp line)
+                               (list (match-string 1 line)
+                                     (match-string 2 line))))
+                           "*.js"
+                           "*/node_modules/*"
+                           dir)))
+    (cl-flet ((make-source
+               (title kind)
+               (helm-figre-source title
+                                  :candidates (cl-remove kind entities :key #'caar :test-not #'string=)
+                                  :printer #'cadr)))
+
+      (helm :buffer "*Angular Tests*"
+            :sources
+            (list (make-source "Controllers" "controller")
+                  (make-source "Directives" "directive")
+                  (make-source "Services" "service")
+                  (make-source "Factory" "factory")
+                  (make-source "States" "state")
+                  (make-source "Modules" "Modules"))))))
+
+
+
+(defun davazp/js-find-tests (&optional dir)
+  (setq dir (or dir (locate-dominating-file default-directory ".git")))
+  (let ((re "^[[:blank:]]*\\(it\\|describe\\)[[:blank:]]*([[:blank:]]*'\\(.*\\)'")
+        ;; In context, we keep a list of the describe elements
+        ;; with less indentation than the current line processed
+        ;; and their indentation. This allow us heuristically to
+        ;; decide inside what describe a 'it' is.
+        (context nil))
+    (helm-figre-find re
+                     (lambda (line)
+                       (when (string-match re line)
+                         (let ((type (match-string 1 line))
+                               (level (match-beginning 1))
+                               (description (match-string 2 line)))
+
+                           ;; Remove the element of the context with bigger
+                           ;; indentation that the current level
+                           (setq context (cl-remove-if
+                                          (lambda (item)
+                                            (>= (cdr item) level))
+                                          context))
+                           (cond
+                            ((string= type "describe")
+                             (push (cons description level) context)
+                             nil)
+                            ((string= type "it")
+                             (list description
+                                   (reverse (mapcar #'car context))))
+                            (t (error "Unknown type '%s'" type))))))
+                     "*.js"
+                     "*/node_modules/*"
+                     dir)))
+
+
+(defun davazp/helm-jstest ()
+  (interactive)
+  (helm :buffer "*Javascript Tests*"
+        :sources (helm-figre-source
+                  "Tests"
+                  :candidates 'davazp/js-find-tests
+                  :printer (lambda (candidate)
+                             (cl-destructuring-bind (description context) candidate
+                               (concat (propertize
+                                        (concat (string-join context " / ") " / ")
+                                        'face 'shadow)
+                                       (propertize description 'face 'bold)))))))
 
 
 
