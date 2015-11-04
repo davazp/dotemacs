@@ -1,0 +1,3 @@
+[submodule "phi-search"]
+	path = phi-search
+	url = https://github.com/zk-phi/phi-search
