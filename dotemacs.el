@@ -236,7 +236,12 @@ buffers."
 (setq org-startup-indented t)
 (setq org-src-fontify-natively t)
 (setq org-return-follows-link t)
+
+(setq org-default-notes-file "~/TODO.org")
+
 (bind-key "C-c a" 'org-agenda)
+(bind-key "C-c c" 'org-capture)
+
 
 ;;; Eshell/Shell
 (defun davazp/eshell-hook ()
