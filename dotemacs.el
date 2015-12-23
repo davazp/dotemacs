@@ -62,6 +62,8 @@
 
 (setq inhibit-splash-screen t)
 
+(setq default-input-method 'spanish-prefix)
+
 (setq confirm-kill-emacs #'yes-or-no-p)
 (fset 'yes-or-no-p #'y-or-n-p)
 
