@@ -392,6 +392,8 @@ buffers."
 (use-package js2-mode
   :mode ("\\.js$" . js2-mode)
   :config
+  (add-hook 'js2-mode-hook 'subword-mode)
+
   (setq-default js2-basic-offset 2)
   (setq-default js-indent-level 2)
   (setq js2-include-browser-externs t
@@ -400,6 +402,8 @@ buffers."
 
   (setq js2-global-externs '("angular" "describe" "it")))
 
+
+(add-hook 'sql-mode-hook 'subword-mode)
 
 
 ;;; Add support in ffap for finding files loaded from node_modules.
