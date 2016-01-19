@@ -241,8 +241,19 @@ buffers."
 
 (setq org-default-notes-file "~/TODO.org")
 
-(bind-key "C-c a" 'org-agenda)
+(bind-key "C-c l" 'org-store-link)
 (bind-key "C-c c" 'org-capture)
+(bind-key "C-c a" 'org-agenda)
+(bind-key "C-c b" 'org-iswitchb)
+
+(setq org-enforce-todo-dependencies t)
+
+(setq org-special-ctrl-a/e t)
+(setq org-special-ctrl-k t)
+(setq org-ctrl-k-protect-subtree t)
+
+
+(setq calendar-week-start-day 1)
 
 
 ;;; Eshell/Shell
