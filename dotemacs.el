@@ -246,6 +246,10 @@ buffers."
 (bind-key "C-c a" 'org-agenda)
 (bind-key "C-c b" 'org-iswitchb)
 
+(setq org-todo-keyword-faces
+      '(("STARTED" . "yellow")
+        ("CANCELED" . (:foreground "gray" :weight bold))))
+
 (setq org-enforce-todo-dependencies t)
 
 (setq org-special-ctrl-a/e t)
