@@ -392,6 +392,8 @@ buffers."
 (use-package js2-mode
   :mode ("\\.js$" . js2-mode)
   :config
+  (bind-key "C-M-h" 'js2-mark-defun js2-mode-map)
+
   (add-hook 'js2-mode-hook 'subword-mode)
 
   (setq-default js2-basic-offset 2)
