@@ -313,6 +313,10 @@ buffers."
                 (magit-refresh)))))))))
 
 
+(bind-key "w" 'davazp/magit-cleanup-hunk-whitespace magit-hunk-section-map)
+
+
+
 ;;; Grep and others
 
 ;; Use case-insensitive grep by default
