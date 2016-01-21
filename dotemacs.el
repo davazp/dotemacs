@@ -292,6 +292,26 @@ buffers."
   (setq magit-last-seen-setup-instructions "1.4.0"))
 
 
+(defun davazp/magit-cleanup-hunk-whitespace ()
+  "Cleanup the whitespaces in the diff hunk under the cursor."
+  (interactive)
+  (let ((current (magit-current-section)))
+    (when (eq 'hunk (magit-section-type current))
+      (let ((file (magit-file-at-point))
+            (context (caddr (magit-section-value current))))
+        (cl-destructuring-bind (first-line count)
+            (mapcar #'string-to-number (split-string context ","))
+          (save-excursion
+            (with-current-buffer (find-file-noselect file)
+              (let (start end)
+                (goto-char (point-min))
+                (forward-line (1- first-line))
+                (setq start (point))
+                (forward-line (1- count))
+                (setq end (point))
+                (whitespace-cleanup-region start end)
+                (magit-refresh)))))))))
+
 
 ;;; Grep and others
 
