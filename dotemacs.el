@@ -289,8 +289,8 @@ buffers."
   :bind ("<f12>" . magit-status)
   :config
   (setq magit-popup-show-common-commands nil)
-  (setq magit-last-seen-setup-instructions "1.4.0"))
-
+  (setq magit-last-seen-setup-instructions "1.4.0")
+  (bind-key "w" 'davazp/magit-cleanup-hunk-whitespace magit-hunk-section-map))
 
 (defun davazp/magit-cleanup-hunk-whitespace ()
   "Cleanup the whitespaces in the diff hunk under the cursor."
@@ -312,8 +312,6 @@ buffers."
                 (whitespace-cleanup-region start end)
                 (magit-refresh)))))))))
 
-
-(bind-key "w" 'davazp/magit-cleanup-hunk-whitespace magit-hunk-section-map)
 
 
 
