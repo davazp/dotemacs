@@ -148,10 +148,10 @@ buffers."
 (use-package multiple-cursors
   :bind ("C-$" . mc/mark-next-like-this))
 
-(let ((dotemacs-path (file-name-directory (or load-file-name (buffer-file-name)))))
-  (add-to-list 'load-path (expand-file-name "phi-search" dotemacs-path)))
+;; (let ((dotemacs-path (file-name-directory (or load-file-name (buffer-file-name)))))
+;;   (add-to-list 'load-path (expand-file-name "phi-search" dotemacs-path)))
 
-(require 'phi-search)
+;; (require 'phi-search)
 
 
 (use-package expand-region
