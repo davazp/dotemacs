@@ -259,6 +259,9 @@ buffers."
 
 (setq calendar-week-start-day 1)
 
+(add-hook 'before-save-hook 'org-update-all-dblocks)
+
+
 
 ;;; Eshell/Shell
 (defun davazp/eshell-hook ()
