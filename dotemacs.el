@@ -239,7 +239,7 @@ buffers."
 (setq org-src-fontify-natively t)
 (setq org-return-follows-link t)
 
-(setq org-default-notes-file "~/TODO.org")
+(setq org-default-notes-file "~/org/TODO.org")
 
 (bind-key "C-c l" 'org-store-link)
 (bind-key "C-c c" 'org-capture)
