@@ -208,6 +208,10 @@ buffers."
   (bind-key "C-r" 'helm-previous-line helm-multi-swoop-map)
   (bind-key "C-s" 'helm-next-line helm-multi-swoop-map))
 
+
+(use-package helm-dash)
+
+
 ;;; Smart parents
 
 (use-package smartparens
