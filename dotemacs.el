@@ -71,6 +71,9 @@
 (setq delete-old-versions -1)
 (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
 
+;;; Start eamcs in daemon mode, so emacsclient can connect to it
+(server-start)
+
 ;; Save History
 (savehist-mode)
 (setq history-delete-duplicates t)
