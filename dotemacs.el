@@ -263,11 +263,12 @@ buffers."
 (setq org-special-ctrl-k t)
 (setq org-ctrl-k-protect-subtree t)
 
-
 (setq calendar-week-start-day 1)
 
 (add-hook 'before-save-hook 'org-update-all-dblocks)
 
+(use-package org-bullets)
+(add-hook 'org-mode-hook 'org-bullets-mode)
 
 
 ;;; Eshell/Shell
