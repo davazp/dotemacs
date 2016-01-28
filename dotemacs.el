@@ -441,6 +441,7 @@ buffers."
         js2-strict-inconsistent-return-warning nil)
 
   (setq js2-global-externs '("angular" "describe" "it")))
+  (add-hook 'js2-mode-hook 'js2-highlight-unused-variables-mode))
 
 
 (add-hook 'sql-mode-hook 'subword-mode)
