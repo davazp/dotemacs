@@ -93,9 +93,6 @@
 ;; but use hippie-expand instead of raw dabbrev-expand!
 (bind-key "M-/" 'hippie-expand)
 
-(setq browse-url-browser-function 'browse-url-chromium)
-
-
 (setq hippie-expand-try-functions-list
       '(try-expand-dabbrev try-expand-dabbrev-all-buffers try-expand-dabbrev-from-kill
                            try-complete-file-name-partially try-complete-file-name
@@ -105,6 +102,8 @@
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
 
+
+(setq browse-url-browser-function 'browse-url-chromium)
 
 ;;; Don't use tabs
 (setq-default indent-tabs-mode nil)
