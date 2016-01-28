@@ -102,6 +102,10 @@
                            try-expand-all-abbrevs try-expand-list try-expand-line
                            try-complete-lisp-symbol-partially try-complete-lisp-symbol))
 
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)
+
+
+
 ;;; Don't use tabs
 (setq-default indent-tabs-mode nil)
 ;; but if some mode use them, then set it to 4 spaces
