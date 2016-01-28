@@ -440,6 +440,8 @@ buffers."
         js2-include-node-externs t
         js2-strict-inconsistent-return-warning nil)
 
+  (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
+
   (setq js2-global-externs '("angular" "describe" "it" "beforeEach" "afterEach"))
   (add-hook 'js2-mode-hook 'js2-highlight-unused-variables-mode))
 
