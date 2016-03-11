@@ -328,6 +328,24 @@ buffers."
                 (magit-refresh)))))))))
 
 
+(defvar magit-show-remote-sections
+  '("origin")
+  "Magit remotes to show by default in the ref manager. Other
+aremotes are folded automatically.")
+
+(defun magit-hide-other-origin-sections (section)
+  "Hide remote sections if they are not listed in
+`magit-show-remote-sections'."
+  (if (and (eq 'remote (magit-section-type section))
+           (not (member (magit-section-value section)
+                        magit-show-remote-sections)))
+      'hide
+    nil))
+
+(add-hook 'magit-section-set-visibility-hook 'magit-hide-other-origin-sections)
+
+
+
 
 
 ;;; Grep and others
