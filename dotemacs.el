@@ -413,6 +413,11 @@ aremotes are folded automatically.")
 (use-package json-mode)
 
 
+;;; Lua
+
+(use-package lua-mode)
+
+
 ;;; Haskell
 
 (use-package haskell-mode
