@@ -200,8 +200,12 @@ buffers."
 
 
 (use-package helm-ls-git)
+(use-package dash)
 
-(require 'helm-figre)
+(when load-file-name
+  (load
+   (concat (file-name-directory (or load-file-name default-directory))
+           "helm-figre")))
 
 (use-package helm-descbinds
   :config
