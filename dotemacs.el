@@ -251,7 +251,9 @@ buffers."
 (setq org-startup-indented t)
 (setq org-src-fontify-natively t)
 (setq org-return-follows-link t)
+(setq org-refile-targets (list `(nil :maxlevel . 9)))
 (setq org-refile-use-outline-path t)
+(setq org-outline-path-complete-in-steps nil)
 
 (setq org-default-notes-file "~/org/TODO.org")
 
