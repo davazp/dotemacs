@@ -99,8 +99,7 @@
                            try-expand-all-abbrevs try-expand-list try-expand-line
                            try-complete-lisp-symbol-partially try-complete-lisp-symbol))
 
-(add-hook 'prog-mode-hook 'flyspell-prog-mode)
-
+;; (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
 
 (setq browse-url-browser-function 'browse-url-chromium)
@@ -276,6 +275,8 @@ buffers."
 
 (use-package org-bullets)
 (add-hook 'org-mode-hook 'org-bullets-mode)
+
+(setq )
 
 
 ;;; Eshell/Shell
