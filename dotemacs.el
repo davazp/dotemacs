@@ -276,8 +276,6 @@ buffers."
 (use-package org-bullets)
 (add-hook 'org-mode-hook 'org-bullets-mode)
 
-(setq )
-
 
 ;;; Eshell/Shell
 (defun davazp/eshell-hook ()
