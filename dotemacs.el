@@ -251,6 +251,7 @@ buffers."
 (setq org-startup-indented t)
 (setq org-src-fontify-natively t)
 (setq org-return-follows-link t)
+(setq org-refile-use-outline-path t)
 
 (setq org-default-notes-file "~/org/TODO.org")
 
