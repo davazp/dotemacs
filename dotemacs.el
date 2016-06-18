@@ -223,13 +223,12 @@ buffers."
 
 ;;; Smart parents
 
-(use-package smartparens
-  :diminish smartparens-mode
-  :config
-  (require 'smartparens-config)
-  (setq sp-ignore-modes-list '(lisp-mode scheme-mode emacs-lisp-mode))
-  (smartparens-global-mode))
-
+;; (use-package smartparens
+;;   :diminish smartparens-mode
+;;   :config
+;;   (require 'smartparens-config)
+;;   (setq sp-ignore-modes-list '(lisp-mode scheme-mode emacs-lisp-mode))
+;;   (smartparens-global-mode))
 
 ;;; Paredit
 
