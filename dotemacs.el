@@ -294,7 +294,7 @@ buffers."
 (require 'dired-x)
 (require 'dired-aux)
 
-(setq dired-listing-switches "-lh")
+(setq dired-listing-switches "-lha")
 
 (setq dired-omit-files "^\\.?#\\|^\\.")
 (add-hook 'dired-mode-hook 'dired-omit-mode)
