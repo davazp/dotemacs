@@ -457,6 +457,11 @@ aremotes are folded automatically.")
   (slime-setup '(slime-fancy)))
 
 
+
+;;;; SQL
+(add-hook 'sql-mode-hook 'subword-mode)
+
+
 ;;;; Javascript
 
 (use-package js2-mode
@@ -477,9 +482,6 @@ aremotes are folded automatically.")
 
   (setq js2-global-externs '("angular" "describe" "it" "beforeEach" "afterEach"))
   (add-hook 'js2-mode-hook 'js2-highlight-unused-variables-mode))
-
-
-(add-hook 'sql-mode-hook 'subword-mode)
 
 
 ;;; Add support in ffap for finding files loaded from node_modules.
