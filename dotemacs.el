@@ -189,6 +189,7 @@ buffers."
 
   (setq helm-mode-fuzzy-match t
         helm-completion-in-region-fuzzy-match t
+        helm-ff-guess-ffap-filenames t
         helm-recentf-fuzzy-match t
         helm-buffers-fuzzy-matching t
         helm-M-x-fuzzy-match t
@@ -491,9 +492,15 @@ aremotes are folded automatically.")
                  default-directory
                  (lambda (dir)
                    (let ((filename (concat dir "node_modules/" name)))
-                     (and (file-exists-p filename)
-                          filename))))))
-      (and base (concat base "node_modules/" name)))))
+                     (file-exists-p filename))))))
+      (cond
+       (base
+        (let ((file (concat base "node_modules/" name)))
+          (if (and (file-directory-p file) (not (string-match-p "/$" file)))
+              (concat file "/")
+            file)))
+       (t
+        (davazp/ffap-nodejs-module (concat name ".js")))))))
 
 (add-to-list 'ffap-alist '(js-mode . davazp/ffap-nodejs-module) t)
 (add-to-list 'ffap-alist '(js2-mode . davazp/ffap-nodejs-module) t)
