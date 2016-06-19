@@ -506,6 +506,21 @@ aremotes are folded automatically.")
 (add-to-list 'ffap-alist '(js2-mode . davazp/ffap-nodejs-module) t)
 
 
+(use-package mocha
+  :config
+  (bind-key "<f6>" 'davazp/mocha-dwim js2-mode-map))
+
+(defun davazp/mocha-dwim ()
+  (interactive)
+  (cond
+   ((mocha-find-current-test)
+    (mocha-run (buffer-file-name) (mocha-find-current-test)))
+   ((and (string-match-p "test" (buffer-file-name)) (eq major-mode 'js2-mode))
+    (mocha-run (buffer-file-name)))
+   (t
+    (mocha-run))))
+
+
 (use-package nodejs-repl)
 
 (defun js-send-to-nodejs-repl ()
