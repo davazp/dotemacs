@@ -52,7 +52,7 @@
 
 (defun gitlab-refresh-projects ()
   (interactive)
-  (request (format "http://git.ctrl/api/v3/projects" gitlab-token)
+  (request "http://git.ctrl/api/v3/projects"
            :params `(("per_page" . "100")
                      ("private_token" . ,gitlab-token))
            :parser (lambda ()
@@ -120,13 +120,21 @@
                         (lambda (c1 c2)
                           (string-lessp (car c1) (car c2)))))))
 
+
+
+(defvar helm-gitlab-map
+  (let ((map (make-sparse-keymap)))
+    (set-keymap-parent map helm-map)
+    (define-key map (kbd "C-r") 'gitlab-refresh-projects)
+    map))
+
 (defun helm-gitlab ()
   (interactive)
   (unless gitlab-projects
     (gitlab-refresh-projects))
   (helm :buffer "*helm gitlab*"
+        :keymap helm-gitlab-map
         :sources '(helm-gitlab-project-source)))
-
 
 
 (provide 'gitlab)

@@ -350,6 +350,7 @@ aremotes are folded automatically.")
 
 (add-hook 'magit-section-set-visibility-hook 'magit-hide-other-origin-sections)
 
+(autoload 'helm-gitlab "gitlab" nil t)
 
 
 
