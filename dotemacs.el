@@ -300,7 +300,9 @@ buffers."
 (setq dired-omit-files "^\\.?#\\|^\\.")
 (add-hook 'dired-mode-hook 'dired-omit-mode)
 
-(use-package wgrep)
+(use-package wgrep
+  :config
+  (setq wgrep-auto-save-buffer t))
 
 
 ;;; MaGIT -- Git integration with GNU/Emacs
