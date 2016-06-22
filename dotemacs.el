@@ -300,10 +300,6 @@ buffers."
 (setq dired-omit-files "^\\.?#\\|^\\.")
 (add-hook 'dired-mode-hook 'dired-omit-mode)
 
-(use-package wgrep
-  :config
-  (setq wgrep-auto-save-buffer t))
-
 
 ;;; MaGIT -- Git integration with GNU/Emacs
 
@@ -362,6 +358,16 @@ aremotes are folded automatically.")
 ;; Use case-insensitive grep by default
 (require 'grep)
 (grep-apply-setting 'grep-find-command '("find . -type f -exec grep -nH -i -e  {} +" . 37))
+
+(dolist (dir '("node_modules" "dist"))
+  (add-to-list 'grep-find-ignored-directories dir))
+
+
+(use-package wgrep
+  :config
+  (setq wgrep-auto-save-buffer t))
+
+
 
 
 ;;; Yasnippet
