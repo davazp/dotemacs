@@ -285,9 +285,12 @@ buffers."
   (bind-key "M-r" 'helm-eshell-history eshell-mode-map))
 
 (add-hook 'eshell-mode-hook 'davazp/eshell-hook)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 (bind-key "C-c C-l" 'helm-comint-input-ring comint-mode-map)
 (setq comint-prompt-read-only t)
+
+(setenv "PAGER" "cat")
 
 
 ;;; Dired
