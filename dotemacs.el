@@ -187,6 +187,8 @@ buffers."
   (bind-key "C-z" 'helm-select-action helm-map) ; list actions using C-z
   (bind-key "o" 'helm-occur helm-command-map)
 
+  (setq recentf-max-saved-items 200)
+
   (setq helm-mode-fuzzy-match t
         helm-completion-in-region-fuzzy-match t
         helm-ff-guess-ffap-filenames t
