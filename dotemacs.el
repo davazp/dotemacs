@@ -340,7 +340,7 @@ buffers."
 (defvar magit-show-remote-sections
   '("origin")
   "Magit remotes to show by default in the ref manager. Other
-aremotes are folded automatically.")
+remotes are folded automatically.")
 
 (defun magit-hide-other-origin-sections (section)
   "Hide remote sections if they are not listed in
