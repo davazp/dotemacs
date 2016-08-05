@@ -468,7 +468,8 @@ remotes are folded automatically.")
 (use-package slime
   :config
   (setq inferior-lisp-program (locate-file "sbcl" exec-path))
-  (slime-setup '(slime-fancy)))
+  (slime-setup '(slime-fancy))
+  (add-hook 'slime-repl-mode-hook 'paredit-mode))
 
 
 
