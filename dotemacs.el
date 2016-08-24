@@ -84,6 +84,7 @@
 
 ;; Buffers and window configuration persistence
 (desktop-save-mode 1)
+(setq desktop-load-locked-desktop t)
 
 ;; Enable semantic minor mode
 (semantic-mode)
