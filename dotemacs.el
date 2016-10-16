@@ -294,6 +294,9 @@ buffers."
 (bind-key "C-c C-l" 'helm-comint-input-ring comint-mode-map)
 (setq comint-prompt-read-only t)
 
+(setq eshell-visual-commands
+      '("screen" "top" "less" "htop"))
+
 (setenv "PAGER" "cat")
 
 
