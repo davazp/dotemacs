@@ -178,6 +178,7 @@ buffers."
   :bind ("C-x C-b" . helm-buffers-list)
   :bind ("C-x C-f" . helm-find-files)
   :bind ("C-x C-d" . helm-browse-project)
+  :bind ("C-x r b" . helm-bookmarks)
   :bind ("C-h a" . helm-apropos)
   ;; :bind ("M-y" . helm-show-kill-ring)
   :config
