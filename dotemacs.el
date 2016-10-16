@@ -484,12 +484,16 @@ remotes are folded automatically.")
 
 ;;;; Javascript
 
+(add-to-list 'load-path "~/.tern/emacs/")
+(autoload 'tern-mode "tern.el" nil t)
+
 (use-package js2-mode
   :mode ("\\.js$" . js2-mode)
   :config
   (bind-key "C-M-h" 'js2-mark-defun js2-mode-map)
 
   (add-hook 'js2-mode-hook 'subword-mode)
+  (add-hook 'js2-mode-hook 'tern-mode)
 
   (setq-default js2-basic-offset 2)
   (setq-default js-indent-level 2)
