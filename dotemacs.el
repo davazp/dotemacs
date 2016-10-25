@@ -70,6 +70,8 @@
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 (setq delete-old-versions -1)
 (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
+;;; I have almost lost too many changes already. Use numbered backups!
+(setq version-control t)
 
 ;;; Start eamcs in daemon mode, so emacsclient can connect to it
 (server-start)
