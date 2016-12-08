@@ -137,6 +137,12 @@ buffers."
 ;;;; Convenience
 ;;;; -----------------------------------------------------------------
 
+
+(defun davazp/set-macro-counter-padding (n)
+  (interactive "nPadding characters: ")
+  (kmacro-set-format (concat "%0" (number-to-string n) "d")))
+
+
 ;;; Diff
 
 ;; Do not open the diff control buffer in a different frame
