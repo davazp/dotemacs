@@ -485,6 +485,19 @@ remotes are folded automatically.")
   (add-hook 'slime-repl-mode-hook 'paredit-mode))
 
 
+;;; Clojure
+
+(use-package cider
+  :config
+  (add-hook 'clojure-mode-hook 'paredit-mode)
+  (setq cider-repl-display-help-banner nil)
+  (setq cider-repl-use-pretty-printing t)
+  (setq cider-cljs-lein-repl
+        "(do (user/run)
+           (user/browser-repl))"))
+
+
+
 
 ;;;; SQL
 (add-hook 'sql-mode-hook 'subword-mode)
