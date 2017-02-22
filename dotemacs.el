@@ -237,12 +237,18 @@ buffers."
 
 ;;; Smart parents
 
-;; (use-package smartparens
-;;   :diminish smartparens-mode
-;;   :config
-;;   (require 'smartparens-config)
-;;   (setq sp-ignore-modes-list '(lisp-mode scheme-mode emacs-lisp-mode))
-;;   (smartparens-global-mode))
+(use-package smartparens
+  :diminish smartparens-mode
+  :config
+  (require 'smartparens-config)
+  (setq sp-ignore-modes-list '(lisp-mode scheme-mode emacs-lisp-mode))
+  (smartparens-global-strict-mode)
+  (sp-use-paredit-bindings)
+  ;; Fix weird behaviour in js2-mode when we kill an empty line right
+  ;; before an expression. Reported upstream at:
+  ;;   https://github.com/Fuco1/smartparens/issues/696
+  (setq sp-no-reindent-after-kill-modes (remq 'js2-mode sp-no-reindent-after-kill-modes)))
+
 
 ;;; Paredit
 
