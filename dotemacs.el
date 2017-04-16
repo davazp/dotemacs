@@ -508,7 +508,7 @@ remotes are folded automatically.")
 (autoload 'tern-mode "tern.el" nil t)
 
 (use-package js2-mode
-  :mode ("\\.js$" . js2-mode)
+  ;; :mode ("\\.js$" . js2-mode)
   :config
   (bind-key "C-M-h" 'js2-mark-defun js2-mode-map)
 
@@ -522,10 +522,23 @@ remotes are folded automatically.")
         js2-include-node-externs t
         js2-strict-inconsistent-return-warning nil)
 
-  (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
+   (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
 
-  (setq js2-global-externs '("angular" "describe" "it" "beforeEach" "afterEach"))
-  (add-hook 'js2-mode-hook 'js2-highlight-unused-variables-mode))
+   (setq js2-global-externs '("angular" "describe" "it" "beforeEach" "afterEach"))
+  ;; (add-hook 'js2-mode-hook 'js2-highlight-unused-variables-mode)
+  )
+
+
+
+(use-package web-mode
+  :mode ("\\.js$" . web-mode)
+  :config
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-markup-indent-offset 2)
+  (add-hook 'web-mode-hook 'subword-mode)
+  (add-to-list 'web-mode-indentation-params '("case-extra-offset" . nil))
+  (setq web-mode-content-types-alist
+        '(("jsx" . "\\.js[x]?\\'")))) 
 
 
 ;;; Add support in ffap for finding files loaded from node_modules.
