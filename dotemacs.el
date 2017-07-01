@@ -54,6 +54,8 @@
 ;; General customizations to the UI. We want to maximize the space
 ;; available for the text.
 
+(setq visible-bell t)
+
 (menu-bar-mode -1)
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
