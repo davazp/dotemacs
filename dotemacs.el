@@ -511,6 +511,8 @@ remotes are folded automatically.")
 (use-package cider
   :config
   (add-hook 'clojure-mode-hook 'paredit-mode)
+  (add-hook 'cider-mode-hook 'eldoc-mode)
+  (add-hook 'cider-repl-mode-hook 'eldoc-mode)
   (setq cider-repl-display-help-banner nil)
   (setq cider-repl-use-pretty-printing t)
   (setq cider-cljs-lein-repl
