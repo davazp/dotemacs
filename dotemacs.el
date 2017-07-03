@@ -480,6 +480,10 @@ remotes are folded automatically.")
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode))
 
 
+;;; Docker
+(use-package dockerfile-mode)
+
+
 ;;;; Emacs Lisp
 
 ;; Show parameter information in the minibuffer
