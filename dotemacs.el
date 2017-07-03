@@ -1,6 +1,6 @@
 ;;; dotemacs.el --- My personal GNU/Emacs customizations  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2015  David Vazquez
+;; Copyright (C) 2015-2017  David Vazquez
 
 ;; Author: David Vazquez <davazp@gmail.com>
 ;; Keywords:
