@@ -533,7 +533,7 @@ remotes are folded automatically.")
 
 
 (use-package web-mode
-  :mode ("\\.js$" . web-mode)
+  :mode ("\\.jsx?$" . web-mode)
   :config
   (setq web-mode-code-indent-offset 2)
   (setq web-mode-markup-indent-offset 2)
