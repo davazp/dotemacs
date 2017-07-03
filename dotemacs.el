@@ -276,7 +276,7 @@ buffers."
 (setq org-refile-use-outline-path t)
 (setq org-outline-path-complete-in-steps nil)
 
-(setq org-default-notes-file "~/org/TODO.org")
+(setq org-default-notes-file "~/org/NOTES.org")
 
 (bind-key "C-c l" 'org-store-link)
 (bind-key "C-c c" 'org-capture)
@@ -299,6 +299,22 @@ buffers."
 
 (use-package org-bullets)
 (add-hook 'org-mode-hook 'org-bullets-mode)
+
+(defun davazp/gtd ()
+  (interactive)
+  (find-file org-default-notes-file))
+
+(bind-key "C-c g" 'davazp/gtd)
+
+(setq org-capture-templates
+      '(("t" "Task" entry
+         (file+headline "~/org/NOTES.org" "Inbox")
+         "* %?
+%T [[%F][%f]]
+%i")))
+
+(setq org-stuck-projects '("+PROJECT" ("TODO") nil nil))
+(setq org-tags-exclude-from-inheritance '("PROJECT"))
 
 
 ;;; Eshell/Shell
