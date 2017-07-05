@@ -559,6 +559,7 @@ remotes are folded automatically.")
   :config
   (setq web-mode-code-indent-offset 2)
   (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-attr-indent-offset 2)
   (add-hook 'web-mode-hook 'subword-mode)
   (add-to-list 'web-mode-indentation-params '("case-extra-offset" . nil))
   (setq web-mode-content-types-alist
