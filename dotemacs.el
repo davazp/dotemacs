@@ -54,7 +54,11 @@
 ;; General customizations to the UI. We want to maximize the space
 ;; available for the text.
 
-(setq visible-bell t)
+(setq visible-bell nil)
+(setq ring-bell-function (lambda ()
+                           (invert-face 'mode-line)
+                           (run-with-timer 0.1 nil 'invert-face 'mode-line)))
+
 
 (menu-bar-mode -1)
 (when (fboundp 'scroll-bar-mode)
