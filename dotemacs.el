@@ -161,7 +161,11 @@ buffers."
 
 ;;; Zooming
 
-(use-package zoom-frm)
+(use-package zoom-frm
+  :bind ("C-x C-+" . zoom-in/out)
+  :bind ("C-x C--" . zoom-in/out)
+  :bind ("C-x C-=" . zoom-in/out)
+  :bind ("C-x C-0" . zoom-in/out))
 
 
 ;;; Multiple Cursors and expand-region
