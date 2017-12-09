@@ -127,6 +127,15 @@
   (emacs-lock-mode 'kill))
 
 
+;;; M-x regexp-builder uses query-replace-regexp syntax by default
+(setq reb-re-syntax 'string)
+
+(use-package visual-regexp
+  :config
+  (bind-key "C-M-%" 'vr/query-replace))
+
+
+
 (defun davazp/switch-to-other-buffer ()
   "Switch to the most recently visited buffer. Calling this
 command repeatly will switch between the last two most recent
