@@ -261,7 +261,7 @@ buffers."
   :diminish smartparens-mode
   :config
   (require 'smartparens-config)
-  (setq sp-ignore-modes-list '(lisp-mode scheme-mode emacs-lisp-mode))
+  (setq sp-ignore-modes-list '(lisp-mode scheme-mode emacs-lisp-mode elixir-mode))
   (smartparens-global-strict-mode)
   (sp-use-paredit-bindings)
   ;; Fix weird behaviour in js2-mode when we kill an empty line right
