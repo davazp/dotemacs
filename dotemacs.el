@@ -628,11 +628,24 @@ remotes are folded automatically.")
           (if (and (file-directory-p file) (not (string-match-p "/$" file)))
               (concat file "/")
             file)))
+       ((string-match-p "\\.jsx?$" name)
+        ;; End here
+        )
        (t
         (davazp/ffap-nodejs-module (concat name ".js")))))))
 
+
+(dolist (mode '(rjsx-mode js-mode js2-mode))
+  (add-to-list 'ffap-string-at-point-mode-alist
+               ;; Taken from the default entry `file' in the variable
+               ;; `ffap-string-at-point-mode-alist', but changed NOT
+               ;; to remove @ fromthe beginning, as they are used for
+               ;; package scopes.
+               `(,mode "--:\\\\${}+<>@-Z_[:alpha:]~*?" "<" "@>;.,!:")))
+
 (add-to-list 'ffap-alist '(js-mode . davazp/ffap-nodejs-module) t)
 (add-to-list 'ffap-alist '(js2-mode . davazp/ffap-nodejs-module) t)
+(add-to-list 'ffap-alist '(rjsx-mode . davazp/ffap-nodejs-module) t)
 
 
 (use-package mocha
