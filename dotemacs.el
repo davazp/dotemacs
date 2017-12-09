@@ -358,8 +358,15 @@ buffers."
 
 
 ;;; Eshell/Shell
+
+;;; Case-insensitive completion in eshell
+(setq eshell-cmpl-ignore-case t)
+
 (defun davazp/eshell-hook ()
-  (bind-key "M-r" 'helm-eshell-history eshell-mode-map))
+  (bind-key "M-r" 'helm-eshell-history eshell-mode-map)
+  ;; Too many programs have a line-oriented behaviour, let's truncate
+  ;; lines instead of do folding in the terminal.
+  (toggle-truncate-lines t))
 
 (add-hook 'eshell-mode-hook 'davazp/eshell-hook)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
