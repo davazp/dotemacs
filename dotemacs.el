@@ -122,6 +122,11 @@
 ;; but if some mode use them, then set it to 4 spaces
 (setq-default tab-width 4)
 
+
+(with-current-buffer "*scratch*"
+  (emacs-lock-mode 'kill))
+
+
 (defun davazp/switch-to-other-buffer ()
   "Switch to the most recently visited buffer. Calling this
 command repeatly will switch between the last two most recent
