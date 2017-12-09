@@ -137,13 +137,6 @@ buffers."
 (bind-key "C-;" 'davazp/switch-to-other-buffer)
 
 
-;; Smarter Modeline
-(use-package smart-mode-line
-  :config
-  (setq sml/no-confirm-load-theme t)
-  (sml/setup))
-
-
 ;; Cycle between different spacing styles, instead of just-one-space
 (bind-key "M-SPC" 'cycle-spacing)
 
