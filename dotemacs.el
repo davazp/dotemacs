@@ -584,26 +584,20 @@ remotes are folded automatically.")
   (setq js2-highlight-level 3)
   (setq js2-include-browser-externs t
         js2-include-node-externs t
+        js2-strict-missing-semi-warning nil
         js2-strict-inconsistent-return-warning nil)
 
    (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
 
    (setq js2-global-externs '("angular" "describe" "it" "beforeEach" "afterEach"))
   ;; (add-hook 'js2-mode-hook 'js2-highlight-unused-variables-mode)
-  )
+   )
 
 
-
-(use-package web-mode
-  :mode ("\\.jsx?$" . web-mode)
+(use-package rjsx-mode
+  :mode ("\\.jsx?$" . rjsx-mode)
   :config
-  (setq web-mode-code-indent-offset 2)
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-attr-indent-offset 2)
-  (add-hook 'web-mode-hook 'subword-mode)
-  (add-to-list 'web-mode-indentation-params '("case-extra-offset" . nil))
-  (setq web-mode-content-types-alist
-        '(("jsx" . "\\.js[x]?\\'")))) 
+  nil)
 
 
 ;;; Add support in ffap for finding files loaded from node_modules.
