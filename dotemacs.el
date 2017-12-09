@@ -69,6 +69,9 @@
 
 (setq inhibit-splash-screen t)
 
+(when (boundp 'mac-command-modifier)
+  (setq mac-command-modifier 'meta))
+
 (setq default-input-method 'spanish-prefix)
 
 (setq confirm-kill-emacs #'yes-or-no-p)
