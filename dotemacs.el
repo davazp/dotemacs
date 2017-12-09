@@ -278,6 +278,28 @@ buffers."
   (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)))
 
 
+;;; Go Mode
+
+(use-package go-mode
+  :config
+  (add-hook 'before-save-hook #'gofmt-before-save)
+  (setq gofmt-command "goimports")
+  (bind-key "M-." 'godef-jump go-mode-map))
+
+(use-package go-eldoc
+  :config
+  (add-hook 'go-mode-hook 'go-eldoc-setup))
+  
+
+;;; Elixir
+
+(use-package elixir-mode
+  )
+
+(use-package alchemist
+  :config
+  (add-hook 'elixir-mode 'alchemist-mode))
+
 
 ;;;; -----------------------------------------------------------------
 ;;;; Tools
