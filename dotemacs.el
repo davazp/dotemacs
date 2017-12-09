@@ -483,6 +483,10 @@ remotes are folded automatically.")
   (helm-projectile-on)
   (setq projectile-switch-project-action 'helm-ls-git-ls))
 
+(use-package helm-git-grep
+  :config
+  (bind-key "s g" 'helm-git-grep projectile-command-map))
+
 
 
 ;;;; -----------------------------------------------------------------
