@@ -630,7 +630,7 @@ remotes are folded automatically.")
             file)))
        ((string-match-p "\\.jsx?$" name)
         ;; End here
-        )
+        nil)
        (t
         (davazp/ffap-nodejs-module (concat name ".js")))))))
 
