@@ -357,6 +357,13 @@ buffers."
 (setq org-tags-exclude-from-inheritance '("PROJECT"))
 
 
+;;; ERC
+(defun chat ()
+  (interactive)
+  (setq erc-autojoin-channels-alist '(("freenode.net" "#emacs-es" "#lisp-es")))
+  (erc :server "irc.freenode.org" :nick "davazp"))
+
+
 ;;; Eshell/Shell
 
 ;;; Case-insensitive completion in eshell
