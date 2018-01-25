@@ -610,6 +610,34 @@ remotes are folded automatically.")
   :config
   nil)
 
+(use-package typescript-mode
+  :config
+  (setq typescript-indent-level 2)
+  (add-hook 'typescript-mode-hook 'prettier-js-mode)
+  (add-hook 'typescript-mode-hook 'tide-mode))
+
+(add-to-list 'auto-mode-alist '("\\.tsx?$" . typescript-mode))
+
+
+(use-package tide)
+
+(add-hook 'js2-mode-hook 'prettier-js-mode)
+(add-hook 'js-mode-hook 'prettier-js-mode)
+
+
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  (company-mode +1))
+
+;; aligns annotation to the right hand side
+(setq company-tooltip-align-annotations t)
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
+
 
 ;;; Add support in ffap for finding files loaded from node_modules.
 (require 'ffap)
