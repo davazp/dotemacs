@@ -586,6 +586,7 @@ remotes are folded automatically.")
   ;; :mode ("\\.js$" . js2-mode)
   :config
   (bind-key "C-M-h" 'js2-mark-defun js2-mode-map)
+  (bind-key "RET" 'js2-line-break js2-mode-map)
 
   (add-hook 'js2-mode-hook 'subword-mode)
   (add-hook 'js2-mode-hook 'tern-mode)
