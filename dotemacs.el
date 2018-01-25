@@ -401,13 +401,14 @@ buffers."
   (global-magit-file-mode)
   (bind-key "w" 'davazp/magit-cleanup-hunk-whitespace magit-hunk-section-map))
 
+
 (defun davazp/magit-cleanup-hunk-whitespace ()
   "Cleanup the whitespaces in the diff hunk under the cursor."
   (interactive)
   (let ((current (magit-current-section)))
     (when (eq 'hunk (magit-section-type current))
       (let ((file (magit-file-at-point))
-            (context (caddr (magit-section-value current))))
+            (context (nth 2 (magit-section-value current))))
         (cl-destructuring-bind (first-line count)
             (mapcar #'string-to-number (split-string context ","))
           (save-excursion
@@ -451,7 +452,6 @@ remotes are folded automatically.")
 
 (dolist (dir '("node_modules" "dist"))
   (add-to-list 'grep-find-ignored-directories dir))
-
 
 (use-package wgrep
   :config
