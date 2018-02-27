@@ -401,7 +401,7 @@ buffers."
 ;;; MaGIT -- Git integration with GNU/Emacs
 
 (use-package magit
-  :bind ("<f12>" . magit-status)
+  :bind ("C-x g" . magit-status)
   :config
   (setq magit-popup-show-common-commands nil)
   (setq magit-last-seen-setup-instructions "1.4.0")
