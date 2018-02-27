@@ -515,8 +515,7 @@ remotes are folded automatically.")
 (use-package scss-mode
   :mode ("\\.scss\\'" . scss-mode)
   :config
-  (bind-key "M-." 'helm-css-scss scss-mode-map)
-  (setq css-indent-offset 2))
+  (bind-key "M-." 'helm-css-scss scss-mode-map))
 
 
 ;;; Support for Markdown, YAML and JSON.
@@ -598,8 +597,6 @@ remotes are folded automatically.")
   (add-hook 'js2-mode-hook 'subword-mode)
   (add-hook 'js2-mode-hook 'tern-mode)
 
-  (setq-default js2-basic-offset 2)
-  (setq-default js-indent-level 2)
   (setq js2-highlight-level 3)
   (setq js2-include-browser-externs t
         js2-include-node-externs t
@@ -612,6 +609,9 @@ remotes are folded automatically.")
   ;; (add-hook 'js2-mode-hook 'js2-highlight-unused-variables-mode)
    )
 
+(use-package editorconfig
+  :diminish 'editorconfig-mode)
+
 
 (use-package rjsx-mode
   :mode ("\\.jsx?$" . rjsx-mode)
@@ -620,7 +620,6 @@ remotes are folded automatically.")
 
 (use-package typescript-mode
   :config
-  (setq typescript-indent-level 2)
   (add-hook 'typescript-mode-hook 'prettier-js-mode)
   (add-hook 'typescript-mode-hook 'tide-mode))
 
