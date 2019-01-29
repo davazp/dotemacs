@@ -46,6 +46,8 @@
 
 (require 'cl-lib)
 
+(use-package diminish)
+
 
 ;;;; -----------------------------------------------------------------
 ;;;; General settings
@@ -95,8 +97,8 @@
 (setq-default save-place t)
 
 ;; Buffers and window configuration persistence
-(desktop-save-mode 1)
-(setq desktop-load-locked-desktop t)
+;; (desktop-save-mode 1)
+;; (setq desktop-load-locked-desktop t)
 
 ;; Enable semantic minor mode
 (semantic-mode)
@@ -335,7 +337,7 @@ buffers."
 
 (setq calendar-week-start-day 1)
 
-(add-hook 'before-save-hook 'org-update-all-dblocks)
+;; (add-hook 'before-save-hook 'org-update-all-dblocks)
 
 (use-package org-bullets)
 (add-hook 'org-mode-hook 'org-bullets-mode)
@@ -393,9 +395,10 @@ buffers."
 (require 'dired-aux)
 
 (setq dired-listing-switches "-lha")
-
-(setq dired-omit-files "^\\.?#\\|^\\.")
+(setq dired-omit-files "^\\.?#\\|^\\.\\|\\.gb$\\|\\.sym$")
 (add-hook 'dired-mode-hook 'dired-omit-mode)
+(setq dired-recursive-deletes 'always)
+
 
 
 ;;; MaGIT -- Git integration with GNU/Emacs
@@ -404,30 +407,34 @@ buffers."
   :bind ("C-x g" . magit-status)
   :config
   (setq magit-popup-show-common-commands nil)
-  (setq magit-last-seen-setup-instructions "1.4.0")
+
   (global-magit-file-mode)
+
+  (setq magit-repository-directories '("~/Projects/")
+        magit-repository-directories-depth 2)
+
   (bind-key "w" 'davazp/magit-cleanup-hunk-whitespace magit-hunk-section-map))
 
 
-(defun davazp/magit-cleanup-hunk-whitespace ()
-  "Cleanup the whitespaces in the diff hunk under the cursor."
-  (interactive)
-  (let ((current (magit-current-section)))
-    (when (eq 'hunk (magit-section-type current))
-      (let ((file (magit-file-at-point))
-            (context (nth 2 (magit-section-value current))))
-        (cl-destructuring-bind (first-line count)
-            (mapcar #'string-to-number (split-string context ","))
-          (save-excursion
-            (with-current-buffer (find-file-noselect file)
-              (let (start end)
-                (goto-char (point-min))
-                (forward-line (1- first-line))
-                (setq start (point))
-                (forward-line (1- count))
-                (setq end (point))
-                (whitespace-cleanup-region start end)
-                (magit-refresh)))))))))
+;; (defun davazp/magit-cleanup-hunk-whitespace ()
+;;   "Cleanup the whitespaces in the diff hunk under the cursor."
+;;   (interactive)
+;;   (let ((current (magit-current-section)))
+;;     (when (eq 'hunk (magit-section-type current))
+;;       (let ((file (magit-file-at-point))
+;;             (context (nth 2 (magit-section-value current))))
+;;         (cl-destructuring-bind (first-line count)
+;;             (mapcar #'string-to-number (split-string context ","))
+;;           (save-excursion
+;;             (with-current-buffer (find-file-noselect file)
+;;               (let (start end)
+;;                 (goto-char (point-min))
+;;                 (forward-line (1- first-line))
+;;                 (setq start (point))
+;;                 (forward-line (1- count))
+;;                 (setq end (point))
+;;                 (whitespace-cleanup-region start end)
+;;                 (magit-refresh)))))))))
 
 
 (defvar magit-show-remote-sections
@@ -435,18 +442,29 @@ buffers."
   "Magit remotes to show by default in the ref manager. Other
 remotes are folded automatically.")
 
-(defun magit-hide-other-origin-sections (section)
-  "Hide remote sections if they are not listed in
-`magit-show-remote-sections'."
-  (if (and (eq 'remote (magit-section-type section))
-           (not (member (magit-section-value section)
-                        magit-show-remote-sections)))
-      'hide
-    nil))
+;; (defun magit-hide-other-origin-sections (section)
+;;   "Hide remote sections if they are not listed in
+;; `magit-show-remote-sections'."
+;;   (if (and (eq 'remote (magit-section-type section))
+;;            (not (member (magit-section-value section)
+;;                         magit-show-remote-sections)))
+;;       'hide
+;;     nil))
 
-(add-hook 'magit-section-set-visibility-hook 'magit-hide-other-origin-sections)
+;; (add-hook 'magit-section-set-visibility-hook 'magit-hide-other-origin-sections)
 
 (autoload 'helm-gitlab "gitlab" nil t)
+
+
+(defun davazp/magit-reword-commits ()
+  (interactive)
+  (magit-section-up)
+  (magit-section-forward-sibling))
+
+
+
+;; (use-package forge)
+
 
 
 
@@ -483,7 +501,8 @@ remotes are folded automatically.")
 (use-package projectile
   :diminish projectile-mode
   :config
-  (projectile-global-mode))
+  (projectile-mode)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
 (use-package helm-projectile
   :config
@@ -493,6 +512,19 @@ remotes are folded automatically.")
 (use-package helm-git-grep
   :config
   (bind-key "s g" 'helm-git-grep projectile-command-map))
+
+
+
+;;; Flycheck
+
+(use-package flycheck
+  :config
+  ;; (global-flycheck-mode t)
+  )
+
+(use-package exec-path-from-shell
+  :config
+  (exec-path-from-shell-initialize))
 
 
 
@@ -510,7 +542,8 @@ remotes are folded automatically.")
 (use-package helm-css-scss
   :config
   (require 'css-mode)
-  (bind-key "M-." 'helm-css-scss css-mode-map))
+  (bind-key "M-." 'helm-css-scss css-mode-map)
+  (add-hook 'css-mode-hook 'prettier-js-mode))
 
 (use-package scss-mode
   :mode ("\\.scss\\'" . scss-mode)
@@ -521,7 +554,12 @@ remotes are folded automatically.")
 ;;; Support for Markdown, YAML and JSON.
 (use-package markdown-mode)
 (use-package yaml-mode)
+
 (use-package json-mode)
+
+(add-hook 'json-mode-hook
+          (lambda ()
+            (prettier-js-mode -1)))
 
 
 ;;; Lua
@@ -535,6 +573,28 @@ remotes are folded automatically.")
   :config
   (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode))
+
+(use-package intero)
+(intero-global-mode)
+
+
+(use-package hindent
+  :config
+  (add-hook 'haskell-mode-hook 'hindent-mode)
+  (setq hindent-reformat-buffer-on-save t))
+
+(setq haskell-process-args-ghci
+      '("-ferror-spans" "-fshow-loaded-modules" "--test"))
+
+(setq haskell-process-args-cabal-repl
+      '("--ghc-options=-ferror-spans -fshow-loaded-modules" "--test"))
+
+(setq haskell-process-args-stack-ghci
+      '("--ghci-options=-ferror-spans -fshow-loaded-modules"
+        "--no-build" "--no-load" "--test"))
+
+(setq haskell-process-args-cabal-new-repl
+      '("--ghc-options=-ferror-spans -fshow-loaded-modules" "--test"))
 
 
 ;;; Docker
@@ -565,16 +625,16 @@ remotes are folded automatically.")
 
 ;;; Clojure
 
-(use-package cider
-  :config
-  (add-hook 'clojure-mode-hook 'paredit-mode)
-  (add-hook 'cider-mode-hook 'eldoc-mode)
-  (add-hook 'cider-repl-mode-hook 'eldoc-mode)
-  (setq cider-repl-display-help-banner nil)
-  (setq cider-repl-use-pretty-printing t)
-  (setq cider-cljs-lein-repl
-        "(do (user/run)
-           (user/browser-repl))"))
+;; (use-package cider
+;;   :config
+;;   (add-hook 'clojure-mode-hook 'paredit-mode)
+;;   (add-hook 'cider-mode-hook 'eldoc-mode)
+;;   (add-hook 'cider-repl-mode-hook 'eldoc-mode)
+;;   (setq cider-repl-display-help-banner nil)
+;;   (setq cider-repl-use-pretty-printing t)
+;;   (setq cider-cljs-lein-repl
+;;         "(do (user/run)
+;;            (user/browser-repl))"))
 
 
 
@@ -585,18 +645,15 @@ remotes are folded automatically.")
 
 ;;;; Javascript
 
-(add-to-list 'load-path "~/.tern/emacs/")
-(autoload 'tern-mode "tern.el" nil t)
-
 (use-package js2-mode
   ;; :mode ("\\.js$" . js2-mode)
   :config
   (bind-key "C-M-h" 'js2-mark-defun js2-mode-map)
   (bind-key "RET" 'js2-line-break js2-mode-map)
-
   (add-hook 'js2-mode-hook 'subword-mode)
-  (add-hook 'js2-mode-hook 'tern-mode)
 
+  (setq-default js2-basic-offset 2)
+  (setq-default js-indent-level 2)
   (setq js2-highlight-level 3)
   (setq js2-include-browser-externs t
         js2-include-node-externs t
@@ -610,7 +667,9 @@ remotes are folded automatically.")
    )
 
 (use-package editorconfig
-  :diminish 'editorconfig-mode)
+  :diminish 'editorconfig-mode
+  :config
+  (add-hook 'prog-mode-hook 'editorconfig-mode))
 
 
 (use-package rjsx-mode
@@ -619,31 +678,42 @@ remotes are folded automatically.")
   nil)
 
 (use-package typescript-mode
+  :bind ("C-c C-r" . tide-rename-symbol)
   :config
   (add-hook 'typescript-mode-hook 'prettier-js-mode)
-  (add-hook 'typescript-mode-hook 'tide-mode))
+  (add-hook 'typescript-mode-hook 'tide-mode)
+  (add-hook 'typescript-mode-hook 'subword-mode)
+  ()
+  (setq-default typescript-indent-level 2))
 
 (add-to-list 'auto-mode-alist '("\\.tsx?$" . typescript-mode))
-
 
 (use-package tide)
 
 (add-hook 'js2-mode-hook 'prettier-js-mode)
 (add-hook 'js-mode-hook 'prettier-js-mode)
 
-
 (defun setup-tide-mode ()
   (interactive)
   (tide-setup)
-  (flycheck-mode +1)
+  (flycheck-mode)
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  (company-mode +1))
+  (eldoc-mode)
+  (tide-hl-identifier-mode)
+  (company-mode))
 
 ;; aligns annotation to the right hand side
 (setq company-tooltip-align-annotations t)
-(add-hook 'typescript-mode-hook #'setup-tide-mode)
+
+(defun davazp/maybe-use-tide ()
+  (let ((tsconfig (locate-dominating-file (buffer-file-name) "tsconfig.json"))
+        (jsconfig (locate-dominating-file (buffer-file-name) "jsconfig.json")))
+    (when (or tsconfig jsconfig)
+      (setup-tide-mode))))
+
+(add-hook 'typescript-mode-hook #'davazp/maybe-use-tide)
+(add-hook 'javascript-mode-hook #'davazp/maybe-use-tide)
+(add-hook 'js2-mode-hook #'davazp/maybe-use-tide)
 
 
 ;;; Add support in ffap for finding files loaded from node_modules.
@@ -697,7 +767,6 @@ remotes are folded automatically.")
    (t
     (mocha-run))))
 
-
 (use-package nodejs-repl)
 
 (defun js-send-to-nodejs-repl ()
@@ -706,9 +775,26 @@ remotes are folded automatically.")
     (nodejs-repl)
     (nodejs-repl--send-string string)))
 
+;; (use-package import-js)
 
 
-
+;; (use-package parinfer
+;;   :ensure t
+;;   :bind
+;;   (("C-," . parinfer-toggle-mode))
+;;   :init
+;;   (progn
+;;     (setq parinfer-extensions
+;;           '(defaults       ; should be included.
+;;              pretty-parens  ; different paren styles for different modes.
+;;              paredit        ; Introduce some paredit commands.
+;;              smart-tab      ; C-b & C-f jump positions and smart shift with tab & S-tab.
+;;              smart-yank))   ; Yank behavior depend on mode.
+;;     (add-hook 'clojure-mode-hook #'parinfer-mode)
+;;     (add-hook 'emacs-lisp-mode-hook #'parinfer-mode)
+;;     (add-hook 'common-lisp-mode-hook #'parinfer-mode)
+;;     (add-hook 'scheme-mode-hook #'parinfer-mode)
+;;     (add-hook 'lisp-mode-hook #'parinfer-mode)))
 
 
 ;;;; -----------------------------------------------------------------
