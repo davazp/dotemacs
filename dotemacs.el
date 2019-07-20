@@ -101,7 +101,10 @@
 ;; (setq desktop-load-locked-desktop t)
 
 ;; Enable semantic minor mode
-(semantic-mode)
+;(semantic-mode)
+
+;;; Smooth scrolling
+(pixel-scroll-mode)
 
 ;; dabbrev expands preserving the orignial case
 (setq dabbrev-case-replace nil)
@@ -117,7 +120,7 @@
 ;; (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
 
-(setq browse-url-browser-function 'browse-url-chromium)
+(setq-default browse-url-browser-function 'browse-url-chrome)
 
 ;;; Don't use tabs
 (setq-default indent-tabs-mode nil)
@@ -173,11 +176,11 @@ buffers."
 
 ;;; Zooming
 
-;; (use-package zoom-frm
-;;   :bind ("C-x C-+" . zoom-in/out)
-;;   :bind ("C-x C--" . zoom-in/out)
-;;   :bind ("C-x C-=" . zoom-in/out)
-;;   :bind ("C-x C-0" . zoom-in/out))
+(use-package zoom-frm
+  :bind ("C-x C-+" . zoom-in/out)
+  :bind ("C-x C--" . zoom-in/out)
+  :bind ("C-x C-=" . zoom-in/out)
+  :bind ("C-x C-0" . zoom-in/out))
 
 
 ;;; Multiple Cursors and expand-region
@@ -263,7 +266,7 @@ buffers."
   :diminish smartparens-mode
   :config
   (require 'smartparens-config)
-  (setq sp-ignore-modes-list '(lisp-mode scheme-mode emacs-lisp-mode elixir-mode))
+  (setq sp-ignore-modes-list '(lisp-mode scheme-mode emacs-lisp-mode elixir-mode org-mode))
   (smartparens-global-strict-mode)
   (sp-use-paredit-bindings)
   ;; Fix weird behaviour in js2-mode when we kill an empty line right
@@ -341,6 +344,14 @@ buffers."
 
 (use-package org-bullets)
 (add-hook 'org-mode-hook 'org-bullets-mode)
+
+(use-package org-tree-slide
+  :config
+  (setq org-tree-slide-heading-emphasis t)
+  (setq org-tree-slide-activate-message	"Hello! This is Emacs!")
+  (bind-key "<left>" 'org-tree-slide-move-previous-tree org-tree-slide-mode-map)
+  (bind-key "<right>" 'org-tree-slide-move-next-tree org-tree-slide-mode-map))
+
 
 (defun davazp/gtd ()
   (interactive)
@@ -462,9 +473,7 @@ remotes are folded automatically.")
   (magit-section-forward-sibling))
 
 
-
-;; (use-package forge)
-
+(use-package forge)
 
 
 
@@ -513,14 +522,13 @@ remotes are folded automatically.")
   :config
   (bind-key "s g" 'helm-git-grep projectile-command-map))
 
-
+(setq helm-git-grep-showing-leading-and-trailing-lines-number 0)
 
 ;;; Flycheck
 
 (use-package flycheck
   :config
-  ;; (global-flycheck-mode t)
-  )
+  (global-flycheck-mode t))
 
 (use-package exec-path-from-shell
   :config
@@ -543,7 +551,8 @@ remotes are folded automatically.")
   :config
   (require 'css-mode)
   (bind-key "M-." 'helm-css-scss css-mode-map)
-  (add-hook 'css-mode-hook 'prettier-js-mode))
+  ;(remove-hook 'scss-mode-hook 'prettier-js-mode)
+  )
 
 (use-package scss-mode
   :mode ("\\.scss\\'" . scss-mode)
@@ -599,6 +608,7 @@ remotes are folded automatically.")
 
 ;;; Docker
 (use-package dockerfile-mode)
+(add-to-list 'auto-mode-alist '("Dockerfile" . dockerfile-mode))
 
 
 ;;;; Emacs Lisp
@@ -616,11 +626,13 @@ remotes are folded automatically.")
 
 ;;;; Common Lisp
 
-(use-package slime
-  :config
-  (setq inferior-lisp-program (locate-file "sbcl" exec-path))
-  (slime-setup '(slime-fancy))
-  (add-hook 'slime-repl-mode-hook 'paredit-mode))
+(use-package sly)
+
+;(use-package slime}
+;  :config}
+;  (setq inferior-lisp-program (locate-file "sbcl" exec-path))}
+;  (slime-setup '(slime-fancy))}
+;  (add-hook 'slime-repl-mode-hook 'paredit-mode))}
 
 
 ;;; Clojure
@@ -636,6 +648,11 @@ remotes are folded automatically.")
 ;;         "(do (user/run)
 ;;            (user/browser-repl))"))
 
+
+
+(use-package company
+  :config
+  (add-hook 'after-init-hook 'global-company-mode))
 
 
 
@@ -677,13 +694,15 @@ remotes are folded automatically.")
   :config
   nil)
 
+(use-package add-node-modules-path)
+
 (use-package typescript-mode
   :bind ("C-c C-r" . tide-rename-symbol)
+  :bind ("C-c C-e" . tide-project-errors)
   :config
   (add-hook 'typescript-mode-hook 'prettier-js-mode)
   (add-hook 'typescript-mode-hook 'tide-mode)
   (add-hook 'typescript-mode-hook 'subword-mode)
-  ()
   (setq-default typescript-indent-level 2))
 
 (add-to-list 'auto-mode-alist '("\\.tsx?$" . typescript-mode))
@@ -693,6 +712,9 @@ remotes are folded automatically.")
 (add-hook 'js2-mode-hook 'prettier-js-mode)
 (add-hook 'js-mode-hook 'prettier-js-mode)
 
+(add-hook 'js2-mode-hook 'add-node-modules-path)
+(add-hook 'js-mode-hook 'add-node-modules-path)
+(add-hook 'typescript-mode-hook 'add-node-modules-path)
 (defun setup-tide-mode ()
   (interactive)
   (tide-setup)
@@ -776,6 +798,26 @@ remotes are folded automatically.")
     (nodejs-repl--send-string string)))
 
 ;; (use-package import-js)
+
+
+
+(use-package rust-mode
+  :config
+  (add-hook 'rust-mode-hook 'rust-enable-format-on-save))
+
+(use-package racer
+  :config
+  (add-hook 'rust-mode-hook #'racer-mode)
+  (add-hook 'racer-mode-hook #'eldoc-mode))
+
+
+(use-package gnuplot
+  :config
+  (add-to-list 'auto-mode-alist '("\\.gnuplot$" . gnuplot-mode)))
+
+(use-package nix-mode
+  :config
+  (add-hook 'nix-mode-hook 'subword-mode))
 
 
 ;; (use-package parinfer
